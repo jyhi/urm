@@ -7,8 +7,9 @@ edition = "2018"
 
 [dependencies]
 rocket = "0.4.4"
+serde = { version = "1.0", features = ["derive"] }
 
 [dependencies.rocket_contrib]
 version = "0.4.4"
 default-features = false
-features = ["helmet", "json", "tera_templates", "mongodb_pool"]
+features = ["helmet", "serve", "json", "tera_templates", "mongodb_pool"]
