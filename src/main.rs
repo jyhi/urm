@@ -11,10 +11,10 @@ mod dashboard;
 use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
 use rocket_contrib::serve::StaticFiles;
-use context::UrmContext;
+use context::UrmInfo;
 
 fn main() {
-  let ctx: UrmContext = Default::default();
+  let urm_info: UrmInfo = Default::default();
 
   rocket::ignite()
     .mount(
@@ -29,6 +29,6 @@ fn main() {
     .mount("/", StaticFiles::from("static"))
     .attach(SpaceHelmet::default())
     .attach(Template::fairing())
-    .manage(ctx)
+    .manage(urm_info)
     .launch();
 }

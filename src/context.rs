@@ -27,9 +27,9 @@ pub struct Products {
   pub number: u64,
 }
 
-#[derive(Default, Serialize)]
-pub struct UrmContext {
-  pub urm: UrmInfo,
-  pub repositories: Repositories,
-  pub products: Products,
+#[derive(Serialize)]
+pub struct UrmContext<'a> {
+  pub urm: &'a UrmInfo,
+  pub repositories: &'a Repositories,
+  pub products: &'a Products,
 }
