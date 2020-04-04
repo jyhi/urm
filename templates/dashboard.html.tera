@@ -1,0 +1,132 @@
+{% import "include/header" as header %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title>Dashboard - {{ urm.brand }}</title>
+  </head>
+
+  <body>
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    {{ header::put(active="Dashboard") }}
+
+    <div id="content" class="container">
+      {# Quick views #}
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              Total Number of Products
+            </div>
+            <div class="card-body">
+              <p class="card-text display-4 text-center">{{ products.number }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      {# Quick actions #}
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card-deck">
+            <div class="card bg-primary text-white">
+              <div class="card-body">
+                <h5 class="card-title"><a href="#" class="text-white stretched-link">Stock In</a></h5>
+                <h6 class="card-subtitle">Register goods into a repository.</h6>
+              </div>
+            </div>
+            <div class="card bg-secondary text-white">
+              <div class="card-body">
+                <h5 class="card-title"><a href="#" class="text-white stretched-link">Stock Out</a></h5>
+                <h6 class="card-subtitle">Move goods out of a repository.</h6>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-body">
+                <h5 class="card-title"><a href="#" class="text-dark stretched-link">View All Products</a></h5>
+                <h6 class="card-subtitle">Take a look at all the things under management.</h6>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      {# Searching #}
+      <div class="form-row mt-3">
+        <div class="col-12 col-md-3">
+          <input type="text" class="form-control" placeholder="key">
+        </div>
+        <div class="col-auto mt-1 mt-md-0">
+          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            contains
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">is</a>
+            <a class="dropdown-item" href="#">is not</a>
+            <a class="dropdown-item" href="#">contains</a>
+            <a class="dropdown-item" href="#">does not contain</a>
+          </div>
+        </div>
+        <div class="col mt-1 mt-md-0">
+          <input type="text" class="form-control" placeholder="value">
+        </div>
+        <div class="col-12 col-md-auto mt-1 mt-md-0">
+          <button type="button" class="btn btn-primary w-100">Search</button>
+        </div>
+      </div>
+      {# Search results #}
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              Search Results
+            </div>
+            <div class="card-body">
+              <table class="table mb-0">
+                <thead>
+                  <tr>
+                    <th scope="col">P/N</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Operations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      {# Last activities #}
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col">
+                  Last 10 Events
+                </div>
+                <div class="col-auto">
+                  <a href="#" class="card-link">View All</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              Coming Soon&trade;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {# Footer #}
+    {% include "include/footer" %}
+  </body>
+
+  <script src="/js/jquery-3.4.1.slim.min.js"></script>
+  <script src="/js/bootstrap.bundle.min.js"></script>
+</html>

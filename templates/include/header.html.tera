@@ -1,0 +1,36 @@
+{% macro put(active="None") %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  {# Brand #}
+  <a class="navbar-brand" href="#">{{ urm.brand }}</a>
+  {# Toggler on small screens #}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  {# Navbar contents #}
+  <div id="navbarSupportedContent" class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        {% if active == "Dashboard" %}
+        <a class="nav-link active" href="#">Dashboard<span class="sr-only"> (current)</span></a>
+        {% else %}
+        <a class="nav-link" href="#">Dashboard</a>
+        {% endif %}
+      </li>
+      <li class="nav-item">
+        {% if active == "Repositories" %}
+        <a class="nav-link active" href="#">Repositories<span class="sr-only"> (current)</span></a>
+        {% else %}
+        <a class="nav-link" href="#">Repositories</a>
+        {% endif %}
+      </li>
+      <li class="nav-item">
+        {% if active == "Products" %}
+        <a class="nav-link active" href="#">Products<span class="sr-only"> (current)</span></a>
+        {% else %}
+        <a class="nav-link" href="#">Products</a>
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+</nav>
+{% endmacro put %}

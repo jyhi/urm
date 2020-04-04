@@ -1,0 +1,7 @@
+<div class="container-fluid bg-light mt-3 py-3">
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      {{ urm.product_name }} {{ urm.version }}
+    </div>
+  </div>
+</div>
