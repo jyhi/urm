@@ -10,7 +10,6 @@ mod context;
 mod index;
 mod dashboard;
 
-use std::fs;
 use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
 use rocket_contrib::serve::StaticFiles;
@@ -18,20 +17,8 @@ use config::UrmConfig;
 use context::UrmInfo;
 
 fn main() {
-  let urm_config: UrmConfig = match fs::read_to_string("urm.toml") {
-    Ok(s) => {
-      match toml::from_str(&s) {
-        Ok(c) => c,
-        Err(e) => {
-          eprintln!("Failed to parse the configuration file: {}. Using the default.", e);
-          Default::default()
-        }
-      }
-    }
-    Err(_) => {
-      Default::default()
-    }
-  };
+  // TODO: Read file name from command line
+  let urm_config = UrmConfig::from_file("urm.toml".to_string());
 
   let mut urm_info: UrmInfo = Default::default();
   if let Some(urm) = urm_config.urm {
