@@ -29,9 +29,25 @@ pub struct Repositories {
   pub list: Vec<Repository>,
 }
 
+#[derive(Serialize)]
+pub struct Product {
+  pub pn: String,
+  pub name: String,
+  pub r#in: String,
+  pub amount: u64,
+}
+
 #[derive(Default, Serialize)]
 pub struct Products {
   pub number: u64,
+  pub list: Vec<Product>,
+}
+
+#[derive(Serialize)]
+pub struct Page {
+  pub current: u64,
+  pub min: u64,
+  pub max: u64,
 }
 
 #[derive(Serialize)]
@@ -39,4 +55,5 @@ pub struct UrmContext<'a> {
   pub urm: &'a UrmInfo,
   pub repositories: &'a Repositories,
   pub products: &'a Products,
+  pub page: &'a Page
 }
