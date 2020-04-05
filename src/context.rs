@@ -2,7 +2,7 @@ use serde::Serialize;
 
 #[derive(Serialize)]
 pub struct UrmInfo {
-  pub brand: &'static str,
+  pub brand: String,
   pub product_name: &'static str,
   pub version: &'static str,
 }
@@ -10,9 +10,9 @@ pub struct UrmInfo {
 impl Default for UrmInfo {
   fn default() -> Self {
     UrmInfo {
-      brand: "Unified Repository Manager",
-      product_name: "Unified Repository Manager",
-      version: "v0.1.0"
+      brand: env!("CARGO_PKG_NAME").to_string(),
+      product_name: env!("CARGO_PKG_NAME"),
+      version: env!("CARGO_PKG_VERSION")
     }
   }
 }
