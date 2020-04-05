@@ -1,0 +1,69 @@
+{% import "include/header" as header %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title>List of Repositories - {{ urm.brand }}</title>
+  </head>
+
+  <body>
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    {{ header::put(active="Repositories") }}
+
+    <div id="content" class="container">
+      {# Warning for JavaScript presence #}
+      <noscript>
+        <div class="alert alert-warning mt-3">
+          <span class="sr-only">Warning:</span>
+          <strong>JavaScript is disabled.</strong>
+          Some parts of this page will not function.
+        </div>
+      </noscript>
+      {# Title #}
+      <div class="row mt-3">
+        <div class="col">
+          <h1 class="display-3">
+            List of Repositories
+          </h1>
+          <h2 class="text-secondary">
+            Total number of repositories: {{ repositories.number }}
+          </h2>
+        </div>
+      </div>
+      {# Card deck #}
+      <div class="row row-cols-1 row-cols-lg-3">
+        {% for r in repositories.list %}
+        <div class="col mt-3">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col">
+                  {{ r.name }}
+                </div>
+                <div class="col-auto">
+                  <a href="#" class="card-link">View</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <h5 class="card-title">
+                Number of Products
+              </h5>
+              <p class="card-text">
+                {{ r.load }}
+              </p>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {# Footer #}
+    {% include "include/footer" %}
+  </body>
+
+  <script src="/js/jquery-3.4.1.slim.min.js"></script>
+  <script src="/js/bootstrap.bundle.min.js"></script>
+</html>

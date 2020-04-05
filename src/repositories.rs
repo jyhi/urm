@@ -3,7 +3,7 @@ use rocket_contrib::json::JsonValue;
 use rocket_contrib::templates::Template;
 use crate::context::*;
 
-#[get("/dashboard", format = "json")]
+#[get("/repositories", format = "json")]
 pub fn api() -> JsonValue {
   json!({
     "error": true,
@@ -11,10 +11,14 @@ pub fn api() -> JsonValue {
   })
 }
 
-#[get("/dashboard", format = "html", rank = 1)]
+#[get("/repositories", format = "html", rank = 1)]
 pub fn ui(urm_info: State<UrmInfo>) -> Template {
   // TODO: Fetch from DB
-  let repositories = Repositories { number: 0, list: vec![] };
+  let repo_list = vec![
+    Repository { name: "Repository 1".to_string(), load: 114000 },
+    Repository { name: "Repository 2".to_string(), load: 514 },
+  ];
+  let repositories = Repositories { number: repo_list.len() as u64, list: repo_list };
   let products = Products { number: 0 };
 
   let ctx = UrmContext {
@@ -23,5 +27,5 @@ pub fn ui(urm_info: State<UrmInfo>) -> Template {
     products: &products,
   };
 
-  Template::render("dashboard", ctx)
+  Template::render("repositories", ctx)
 }

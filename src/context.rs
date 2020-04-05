@@ -17,9 +17,16 @@ impl Default for UrmInfo {
   }
 }
 
+#[derive(Serialize)]
+pub struct Repository {
+  pub name: String,
+  pub load: u64,
+}
+
 #[derive(Default, Serialize)]
 pub struct Repositories {
   pub number: u64,
+  pub list: Vec<Repository>,
 }
 
 #[derive(Default, Serialize)]

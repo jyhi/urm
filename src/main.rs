@@ -9,6 +9,7 @@ mod config;
 mod context;
 mod index;
 mod dashboard;
+mod repositories;
 
 use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
@@ -34,7 +35,9 @@ fn main() {
         index::ui,
         index::api,
         dashboard::ui,
-        dashboard::api
+        dashboard::api,
+        repositories::ui,
+        repositories::api,
       ]
     )
     .mount("/", StaticFiles::from("static"))
