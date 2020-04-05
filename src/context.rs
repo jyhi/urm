@@ -23,7 +23,7 @@ pub struct Repository {
   pub load: u64,
 }
 
-#[derive(Default, Serialize)]
+#[derive(Serialize)]
 pub struct Repositories {
   pub number: u64,
   pub list: Vec<Repository>,
@@ -37,7 +37,7 @@ pub struct Product {
   pub amount: u64,
 }
 
-#[derive(Default, Serialize)]
+#[derive(Serialize)]
 pub struct Products {
   pub number: u64,
   pub list: Vec<Product>,
