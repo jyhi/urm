@@ -18,9 +18,16 @@ impl Default for UrmInfo {
 }
 
 #[derive(Serialize)]
+pub struct Tag {
+  pub name: String,
+}
+
+#[derive(Serialize)]
 pub struct Repository {
+  pub ln_p: String,
   pub name: String,
   pub load: u64,
+  pub tags: Vec<Tag>,
 }
 
 #[derive(Serialize)]
@@ -56,4 +63,20 @@ pub struct UrmContext<'a> {
   pub repositories: &'a Repositories,
   pub products: &'a Products,
   pub page: &'a Page
+}
+
+#[derive(Serialize)]
+pub struct UrmRepositoryContext<'a> {
+  pub urm: &'a UrmInfo,
+  pub repository: &'a Repository,
+  pub products: &'a Products,
+  pub page: &'a Page,
+}
+
+#[derive(Serialize)]
+pub struct UrmProductContext<'a> {
+  pub urm: &'a UrmInfo,
+  pub repositories: &'a Repositories,
+  pub product: &'a Product,
+  pub page: &'a Page,
 }

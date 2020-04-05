@@ -10,6 +10,7 @@ mod context;
 mod index;
 mod dashboard;
 mod repositories;
+mod repository;
 mod products;
 
 use rocket_contrib::helmet::SpaceHelmet;
@@ -39,6 +40,8 @@ fn main() {
         dashboard::api,
         repositories::ui,
         repositories::api,
+        repository::ui,
+        repository::api,
         products::ui,
         products::api,
       ]

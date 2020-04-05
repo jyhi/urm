@@ -1,0 +1,134 @@
+{% import "include/header" as header %}
+{% import "include/tags" as tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title>{{ repository.name }} - {{ urm.brand }}</title>
+  </head>
+
+  <body>
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    {{ header::put() }}
+
+    <div id="content" class="container">
+      {# Warning for JavaScript presence #}
+      <noscript>
+        <div class="alert alert-warning mt-3">
+          <span class="sr-only">Warning:</span>
+          <strong>JavaScript is disabled.</strong>
+          Some parts of this page will not function.
+        </div>
+      </noscript>
+      <div class="row mt-3">
+        {# Title #}
+        <div class="col d-flex align-items-start flex-column">
+          <span class="text-secondary">L/N-P: {{ repository.ln_p }}</span>
+          <h1 class="display-3">
+            <span lang="en">{{ repository.name }}</span>
+          </h1>
+          {# Tags #}
+          {{ tags::put(tags=repository.tags) }}
+        </div>
+        <div class="col-12 col-md-auto mt-3 mt-md-0">
+          {# Operations #}
+          <div class="row justify-content-end">
+            <div class="col-auto">
+              <span class="sr-only">Operations:</span>
+              <button type="button" class="btn btn-link">In</button>
+              <button type="button" class="btn btn-link">Out</button>
+              <button type="button" class="btn btn-link">Edit</button>
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+          {# In Stock #}
+          <div class="row mt-3">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  In Stock<span class="text-secondary"> ("load")</span>
+                </div>
+                <div class="card-body">
+                  <p class="h2 text-center">{{ repository.load }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              List of Products
+            </div>
+            <div class="card-body">
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th scope="col">P/N</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">Operations</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for p in products.list %}
+                  <tr>
+                    <th scope="row" class="align-middle">{{ p.pn }}</th>
+                    <td class="align-middle">{{ p.name }}</td>
+                    <td class="align-middle">{{ p.amount }}</td>
+                    <td class="align-middle">
+                      <div class="btn-group" role="group" aria-label="Operations on {{ p.pn }}">
+                        <a href="#" class="btn btn-outline-secondary">View</a>
+                        <a href="#" class="btn btn-outline-secondary">In</a>
+                        <a href="#" class="btn btn-outline-secondary">Out</a>
+                      </div>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+              {# Pagination #}
+              <nav aria-label="Page navigation for the list of products in {{ repository.name }}">
+                <ul class="pagination justify-content-center">
+                  {% if page.current <= page.min %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Previous</a>
+                  </li>
+                  {% else %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                  </li>
+                  {% endif %}
+                  {% for n in range(start=page.min, end=(page.max + 1)) %}
+                  <li class="page-item"><a class="page-link" href="#">{{ n }}</a></li>
+                  {% endfor %}
+                  {% if page.current >= page.max %}
+                  <li class="page-item disabled">
+                    <a class="page-link" href="#" aria-disabled="true">Next</a>
+                  </li>
+                  {% else %}
+                  <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                  </li>
+                  {% endif %}
+                </ul>
+              </nav>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {# Footer #}
+    {% include "include/footer" %}
+  </body>
+
+  <script src="/js/jquery-3.4.1.slim.min.js"></script>
+  <script src="/js/bootstrap.bundle.min.js"></script>
+</html>

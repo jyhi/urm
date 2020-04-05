@@ -15,8 +15,8 @@ pub fn api() -> JsonValue {
 pub fn ui(urm_info: State<UrmInfo>) -> Template {
   // TODO: Fetch from DB
   let repo_list = vec![
-    Repository { name: "Repository 1".to_string(), load: 114000 },
-    Repository { name: "Repository 2".to_string(), load: 514 },
+    Repository { ln_p: "T0803080".to_string(), name: "Repository 1".to_string(), load: 114000, tags: vec![Tag { name: "testing".to_string() }] },
+    Repository { ln_p: "T0803080".to_string(), name: "Repository 2".to_string(), load: 514, tags: vec![Tag { name: "testing".to_string() }] },
   ];
   let product_list = vec![
     Product { pn: "100040".to_string(), name: "Foo Bar".to_string(), r#in: "T8-308".to_string(), amount: 147 },
