@@ -1,2 +1,5 @@
+# Configuration file for URM, the Unified Repository Manager.
+
 [urm]
+# The branding text located at the top-left corner in the user interface.
 brand = "Unified Repository Manager"
