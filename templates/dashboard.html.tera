@@ -52,7 +52,7 @@
             </div>
             <div class="card">
               <div class="card-body">
-                <h5 class="card-title"><a href="#" class="text-dark stretched-link">View All Products</a></h5>
+                <h5 class="card-title"><a href="/products" class="text-dark stretched-link">View All Products</a></h5>
                 <h6 class="card-subtitle">Take a look at all the things under management.</h6>
               </div>
             </div>

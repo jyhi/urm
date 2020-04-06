@@ -43,7 +43,7 @@
                   {{ r.name }}
                 </div>
                 <div class="col-auto">
-                  <a href="#" class="card-link">View</a>
+                  <a href="/repository/{{ r.ln_p }}" class="card-link">View</a>
                 </div>
               </div>
             </div>
