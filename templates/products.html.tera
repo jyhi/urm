@@ -1,4 +1,5 @@
 {% import "include/header" as header %}
+{% import "include/pagenav" as pagination %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -66,31 +67,7 @@
         </div>
       </div>
       {# Pagination #}
-      <nav aria-label="Page navigation for the list of products">
-        <ul class="pagination justify-content-center">
-          {% if page.current <= page.min %}
-          <li class="page-item disabled">
-            <a class="page-link" href="##" tabindex="-1" aria-disabled="true">Previous</a>
-          </li>
-          {% else %}
-          <li class="page-item">
-            <a class="page-link" href="/products?page={{ page.current - 1 }}" tabindex="-1">Previous</a>
-          </li>
-          {% endif %}
-          {% for n in range(start=page.min, end=(page.max + 1)) %}
-          <li class="page-item"><a class="page-link" href="/products?page={{ n }}">{{ n }}</a></li>
-          {% endfor %}
-          {% if page.current >= page.max %}
-          <li class="page-item disabled">
-            <a class="page-link" href="#" aria-disabled="true">Next</a>
-          </li>
-          {% else %}
-          <li class="page-item">
-            <a class="page-link" href="/products?page={{ page.current + 1 }}">Next</a>
-          </li>
-          {% endif %}
-        </ul>
-      </nav>
+      {{ pagination::put(min=page.min, current=page.current, max=page.max) }}
     </div>
     {# Footer #}
     {% include "include/footer" %}
