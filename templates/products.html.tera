@@ -36,34 +36,36 @@
       {# List #}
       <div class="row mt-3">
         <div class="col">
-          <table class="table table-striped">
-            <thead>
-              <tr>
-                <th scope="col">P/N</th>
-                <th scope="col">Name</th>
-                <th scope="col">In</th>
-                <th scope="col">Amount</th>
-                <th scope="col">Operations</th>
-              </tr>
-            </thead>
-            <tbody>
-              {% for p in products %}
-              <tr>
-                <th scope="row" class="align-middle">{{ p.pn }}</th>
-                <td class="align-middle">{{ p.name }}</td>
-                <td class="align-middle">{{ p.in.name }}</td>
-                <td class="align-middle">{{ p.amount }}</td>
-                <td class="align-middle">
-                  <div class="btn-group" role="group" aria-label="Operations on {{ p.name }}">
-                    <a href="/product/{{ p.pn }}" class="btn btn-outline-secondary">View</a>
-                    <a href="#" class="btn btn-outline-secondary">In</a>
-                    <a href="#" class="btn btn-outline-secondary">Out</a>
-                  </div>
-                </td>
-              </tr>
-              {% endfor %}
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">P/N</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">In</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Operations</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for p in products %}
+                <tr>
+                  <th scope="row" class="align-middle">{{ p.pn }}</th>
+                  <td class="align-middle">{{ p.name }}</td>
+                  <td class="align-middle">{{ p.in.name }}</td>
+                  <td class="align-middle">{{ p.amount }}</td>
+                  <td class="align-middle">
+                    <div class="btn-group" role="group" aria-label="Operations on {{ p.name }}">
+                      <a href="/product/{{ p.pn }}" class="btn btn-outline-secondary">View</a>
+                      <a href="#" class="btn btn-outline-secondary">In</a>
+                      <a href="#" class="btn btn-outline-secondary">Out</a>
+                    </div>
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
       {# Pagination #}
