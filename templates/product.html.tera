@@ -79,7 +79,7 @@
                 In Room<span class="text-secondary"> ("in")</span>
               </div>
               <div class="card-body d-flex justify-content-center align-items-center">
-                <p class="h2">{{ product.in }}</p>
+                <p class="h2">{{ product.in.name }}</p>
               </div>
             </div>
             {# On #}

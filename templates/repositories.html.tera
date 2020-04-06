@@ -28,13 +28,13 @@
             List of Repositories
           </h1>
           <h2 class="text-secondary">
-            Total number of repositories: {{ repositories.number }}
+            Total number of repositories: {{ repositories | length }}
           </h2>
         </div>
       </div>
       {# Card deck #}
       <div class="row row-cols-1 row-cols-lg-3">
-        {% for r in repositories.list %}
+        {% for r in repositories %}
         <div class="col mt-3">
           <div class="card">
             <div class="card-header">

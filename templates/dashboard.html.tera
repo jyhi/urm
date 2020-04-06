@@ -29,7 +29,7 @@
               Total Number of Products
             </div>
             <div class="card-body">
-              <p class="card-text display-4 text-center">{{ products.number }}</p>
+              <p class="card-text display-4 text-center">{{ nprod }}</p>
             </div>
           </div>
         </div>

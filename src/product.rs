@@ -1,7 +1,49 @@
 use rocket::State;
 use rocket_contrib::json::JsonValue;
 use rocket_contrib::templates::Template;
-use crate::context::*;
+use serde::Serialize;
+use crate::repository::Repository;
+use crate::context::{UrmInfo, Tag, Attribute};
+
+#[derive(Serialize)]
+pub struct Product {
+  pub pn: String,
+  pub name: String,
+  pub amount: u64,
+  pub r#in: Repository,
+  pub on: String,
+  pub tags: Vec<Tag>,
+  pub attributes: Vec<Attribute>,
+}
+
+#[derive(Serialize)]
+pub struct ProductContext<'a> {
+  pub urm: &'a UrmInfo,
+  pub product: Product,
+}
+
+impl<'a> ProductContext<'a> {
+  fn test(urm_info: &'a UrmInfo, pn: String) -> Self {
+    let product = Product {
+      pn: pn.clone(),
+      name: "Epic Bacon".to_string(),
+      amount: 42,
+      r#in: Repository { ln_p: "Z12345678".to_string(), name: "Test Repository".to_string(), load: 42, tags: vec![], has: None },
+      on: "Y12345678".to_string(),
+      tags: vec![
+        Tag { name: "test product".to_string() },
+      ],
+      attributes: vec![
+        Attribute { key: "test attr key".to_string(), value: "Test attribute value".to_string() },
+      ],
+    };
+
+    ProductContext {
+      urm: &urm_info,
+      product: product,
+    }
+  }
+}
 
 #[get("/product/<pn>", format = "json")]
 pub fn api(pn: String) -> JsonValue {
@@ -13,20 +55,7 @@ pub fn api(pn: String) -> JsonValue {
 }
 
 #[get("/product/<pn>", format = "html", rank = 1)]
-pub fn ui(pn: String, urm_info: State<UrmInfo>) -> Template {
-  // TODO: Fetch from DB
-  let repo_list = vec![
-    Repository { ln_p: "T0803080".to_string(), name: "T8-308".to_string(), load: 114000, tags: vec![Tag { name: "testing".to_string() }] },
-  ];
-  let product = Product { pn: pn, name: "Epic Bacon".to_string(), r#in: repo_list.clone(), on: "H0010300".to_string(), amount: 42 };
-  let page = Page { current: 1, min: 1, max: 1 };
-
-  let ctx = UrmProductContext {
-    urm: &urm_info,
-    repositories: &repo_list,
-    product: &product,
-    page: &page,
-  };
-
+pub fn ui(urm_info: State<UrmInfo>, pn: String) -> Template {
+  let ctx = ProductContext::test(&urm_info, pn.clone());
   Template::render("product", ctx)
 }
