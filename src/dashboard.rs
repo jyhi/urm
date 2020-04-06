@@ -20,11 +20,9 @@ impl<'a> DashboardContext<'a> {
 }
 
 #[get("/dashboard", format = "json")]
-pub fn api() -> JsonValue {
-  json!({
-    "error": true,
-    "desc": "Not implemented"
-  })
+pub fn api(urm_info: State<UrmInfo>) -> JsonValue {
+  let ctx = DashboardContext::test(&urm_info);
+  json!(ctx)
 }
 
 #[get("/dashboard", format = "html", rank = 1)]

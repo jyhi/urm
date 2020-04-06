@@ -40,11 +40,11 @@ impl<'a> ProductsContext<'a> {
 }
 
 #[get("/products", format = "json")]
-pub fn api() -> JsonValue {
-  json!({
-    "error": true,
-    "desc": "Not implemented"
-  })
+pub fn api(urm_info: State<UrmInfo>) -> JsonValue {
+  let page_info = PageInfo { current: 1, min: 1, max: 1 };
+
+  let ctx = ProductsContext::test(&urm_info, &page_info);
+  json!(ctx)
 }
 
 #[get("/products", format = "html", rank = 1)]

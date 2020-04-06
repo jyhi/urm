@@ -46,12 +46,9 @@ impl<'a> ProductContext<'a> {
 }
 
 #[get("/product/<pn>", format = "json")]
-pub fn api(pn: String) -> JsonValue {
-  json!({
-    "error": true,
-    "desc": "Not implemented",
-    "P/N": pn,
-  })
+pub fn api(urm_info: State<UrmInfo>, pn: String) -> JsonValue {
+  let ctx = ProductContext::test(&urm_info, pn.clone());
+  json!(ctx)
 }
 
 #[get("/product/<pn>", format = "html", rank = 1)]

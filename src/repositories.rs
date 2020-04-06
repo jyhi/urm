@@ -35,11 +35,11 @@ impl<'a> RepositoriesContext<'a> {
 }
 
 #[get("/repositories", format = "json")]
-pub fn api() -> JsonValue {
-  json!({
-    "error": true,
-    "desc": "Not implemented"
-  })
+pub fn api(urm_info: State<UrmInfo>) -> JsonValue {
+  let page_info = PageInfo { current: 1, min: 1, max: 1 };
+
+  let ctx = RepositoriesContext::test(&urm_info, &page_info);
+  json!(ctx)
 }
 
 #[get("/repositories", format = "html", rank = 1)]

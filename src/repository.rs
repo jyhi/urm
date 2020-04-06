@@ -56,12 +56,11 @@ impl<'a> RepositoryContext<'a> {
 }
 
 #[get("/repository/<ln_p>", format = "json")]
-pub fn api(ln_p: String) -> JsonValue {
-  json!({
-    "error": true,
-    "desc": "Not implemented",
-    "L/N-P": ln_p,
-  })
+pub fn api(urm_info: State<UrmInfo>, ln_p: String) -> JsonValue {
+  let page_info = PageInfo { current: 1, min: 1, max: 1 };
+
+  let ctx = RepositoryContext::test(&urm_info, &page_info, ln_p.clone());
+  json!(ctx)
 }
 
 #[get("/repository/<ln_p>", format = "html", rank = 1)]
