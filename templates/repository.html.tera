@@ -4,7 +4,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8" />
+    {% include "include/meta-common" %}
     <link rel="stylesheet" href="/css/bootstrap.min.css" />
     <title>{{ repository.name }} - {{ urm.brand }}</title>
   </head>
