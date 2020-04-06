@@ -19,9 +19,9 @@ pub fn ui(urm_info: State<UrmInfo>) -> Template {
     Repository { ln_p: "T0803080".to_string(), name: "Repository 2".to_string(), load: 514, tags: vec![Tag { name: "testing".to_string() }] },
   ];
   let product_list = vec![
-    Product { pn: "100040".to_string(), name: "Foo Bar".to_string(), r#in: "T8-308".to_string(), amount: 147 },
-    Product { pn: "100041".to_string(), name: "Lorem ipsum".to_string(), r#in: "T8-308".to_string(), amount: 255 },
-    Product { pn: "100042".to_string(), name: "Epic Bacon".to_string(), r#in: "T8-308".to_string(), amount: 42 },
+    Product { pn: "100040".to_string(), name: "Foo Bar".to_string(), r#in: repo_list.clone(), on: "H0010300".to_string(), amount: 147 },
+    Product { pn: "100041".to_string(), name: "Lorem ipsum".to_string(), r#in: repo_list.clone(), on: "H0010300".to_string(), amount: 255 },
+    Product { pn: "100042".to_string(), name: "Epic Bacon".to_string(), r#in: repo_list.clone(), on: "H0010300".to_string(), amount: 42 },
   ];
   let repositories = Repositories { number: repo_list.len() as u64, list: repo_list };
   let products = Products { number: product_list.len() as u64, list: product_list };

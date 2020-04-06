@@ -1,0 +1,119 @@
+{% import "include/header" as header %}
+{% import "include/tags" as tags %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title>{{ product.name }} - {{ urm.brand }}</title>
+  </head>
+
+  <body>
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    {{ header::put() }}
+
+    <div id="content" class="container">
+      <div class="row mt-3">
+        <div class="col d-flex align-items-start flex-column">
+          {# P/N #}
+          <div class="row">
+            <div class="col">
+              <span class="text-secondary">P/N: {{ product.pn }}</span>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <h1 class="display-3">
+                <span lang="en">{{ product.name }}</span>
+              </h1>
+            </div>
+          </div>
+          {# Tags #}
+          {{ tags::put(tags=product.tags) }}
+        </div>
+        <div class="col-12 col-md-auto mt-3 mt-md-0">
+          <div class="row justify-content-end">
+            <div class="col-auto">
+              <span class="sr-only">Operations:</span>
+              <button type="button" class="btn btn-link">In</button>
+              <button type="button" class="btn btn-link">Out</button>
+              <button type="button" class="btn btn-link">Edit</button>
+              <button type="button" class="btn btn-danger">Remove</button>
+            </div>
+          </div>
+          <div class="row mt-3">
+            <div class="col">
+              <div class="card">
+                <div class="card-header">
+                  In Stock<span class="text-secondary"> ("amount")</span>
+                </div>
+                <div class="card-body">
+                  <p class="h2 text-center">{{ product.amount }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <hr />
+      {# Barcode #}
+      <div class="row mt-3 justify-content-center">
+        <div class="col-auto">
+          <img class="img-fluid" src="/product/{{ product.pn }}/barcode.png" alt="The barcode of {{ product.name }}" />
+        </div>
+      </div>
+      {# Barcode printing #}
+      <div class="row mt-3 justify-content-center">
+        <div class="col-auto">
+          <button class="btn btn-primary">Print Barcode</button>
+        </div>
+      </div>
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card-deck">
+            {# In #}
+            <div class="card">
+              <div class="card-header">
+                In Room<span class="text-secondary"> ("in")</span>
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <p class="h2">{{ product.in }}</p>
+              </div>
+            </div>
+            {# On #}
+            <div class="card">
+              <div class="card-header">
+                On Location<span class="text-secondary"> ("on")</span>
+              </div>
+              <div class="card-body d-flex justify-content-center align-items-center">
+                <p class="h2">{{ product.on }}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      {# Other attributes #}
+      <div class="row row-cols-1 row-cols-md-3 mt-0 mt-md-3">
+        {% for attr in product.attributes %}
+        <div class="col">
+          <div class="card mt-3 mt-md-0">
+            <div class="card-header">
+              {{ attr.key }}
+            </div>
+            <div class="card-body">
+              {{ attr.value }}
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {# Footer #}
+    {% include "include/footer" %}
+  </body>
+
+  <script src="/js/jquery-3.4.1.slim.min.js"></script>
+  <script src="/js/bootstrap.bundle.min.js"></script>
+</html>

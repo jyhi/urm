@@ -12,6 +12,7 @@ mod dashboard;
 mod repositories;
 mod repository;
 mod products;
+mod product;
 
 use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
@@ -44,6 +45,8 @@ fn main() {
         repository::api,
         products::ui,
         products::api,
+        product::ui,
+        product::api,
       ]
     )
     .mount("/", StaticFiles::from("static"))
