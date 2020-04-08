@@ -7,6 +7,7 @@ extern crate toml;
 
 mod config;
 mod context;
+mod database;
 mod index;
 mod dashboard;
 mod repositories;
@@ -17,12 +18,9 @@ mod product;
 use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
 use rocket_contrib::serve::StaticFiles;
-use rocket_contrib::databases::mongodb;
 use config::UrmConfig;
 use context::UrmInfo;
-
-#[database("mongo_main")]
-struct UrmDb(mongodb::db::Database);
+use database::UrmDb;
 
 fn main() {
   // TODO: Read file name from command line

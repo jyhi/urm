@@ -5,7 +5,7 @@ use serde::Serialize;
 use crate::product::Product;
 use crate::context::{UrmInfo, PageInfo, Tag, Attribute};
 
-#[derive(Serialize)]
+#[derive(Default, Serialize)]
 pub struct Repository {
   pub ln_p: String,
   pub name: String,
