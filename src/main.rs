@@ -17,8 +17,12 @@ mod product;
 use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
 use rocket_contrib::serve::StaticFiles;
+use rocket_contrib::databases::mongodb;
 use config::UrmConfig;
 use context::UrmInfo;
+
+#[database("mongo_main")]
+struct UrmDb(mongodb::db::Database);
 
 fn main() {
   // TODO: Read file name from command line
@@ -52,6 +56,7 @@ fn main() {
     .mount("/", StaticFiles::from("static"))
     .attach(SpaceHelmet::default())
     .attach(Template::fairing())
+    .attach(UrmDb::fairing())
     .manage(urm_info)
     .launch();
 }
