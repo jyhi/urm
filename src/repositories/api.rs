@@ -1,6 +1,8 @@
 use serde::Serialize;
+use rocket_contrib::databases::mongodb;
+use rocket_contrib::databases::mongodb::db::ThreadedDatabase;
+use crate::database::UrmDb;
 use crate::repository::Repository;
-use crate::context::Tag;
 
 #[derive(Serialize)]
 pub struct Context {
@@ -8,22 +10,16 @@ pub struct Context {
 }
 
 impl Context {
-  pub fn test() -> Self {
-    let repositories = vec![
-      Repository {
-        ln_p: "012345".to_string(),
-        name: "Test Repository".to_string(),
-        load: 42,
-        tags: vec![
-          Tag { name: "test repo".to_string() }
-        ],
-        has: vec![],
-        attributes: vec![],
-      }
-    ];
+  pub fn from_db(db: &UrmDb)
+    -> Result<Self, mongodb::error::Error>
+  {
+    let repositories: Vec<Repository> = db.collection("repositories")
+      .find(None, None)?
+      .map(|r| Repository::from(r.unwrap_or(Default::default()))) // XXX: TODO: Error handling
+      .collect();
 
-    Context {
-      repositories: repositories,
-    }
+    Ok(Context{
+      repositories: repositories
+    })
   }
 }
