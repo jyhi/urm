@@ -95,10 +95,10 @@
         </div>
       </div>
       {# Other attributes #}
-      <div class="row row-cols-1 row-cols-md-3 mt-0 mt-md-3">
+      <div class="row row-cols-1 row-cols-md-3">
         {% for attr in product.attributes %}
         <div class="col">
-          <div class="card mt-3 mt-md-0">
+          <div class="card mt-3">
             <div class="card-header">
               {{ attr.key }}
             </div>
