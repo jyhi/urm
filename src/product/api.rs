@@ -1,7 +1,3 @@
-use rocket::State;
-use rocket::response::status::NotFound;
-use rocket_contrib::json::JsonValue;
-use rocket_contrib::templates::Template;
 use rocket_contrib::databases::mongodb;
 use rocket_contrib::databases::mongodb::{
   bson,
@@ -12,26 +8,16 @@ use serde::Serialize;
 use crate::database::UrmDb;
 use crate::repository::Repository;
 use crate::context::{UrmInfo, Tag, Attribute};
-
-#[derive(Default, Serialize)]
-pub struct Product {
-  pub pn: String,
-  pub name: String,
-  pub amount: u64,
-  pub r#in: Repository,
-  pub on: String,
-  pub tags: Vec<Tag>,
-  pub attributes: Vec<Attribute>,
-}
+use super::Product;
 
 #[derive(Serialize)]
-pub struct ProductContext<'a> {
+pub struct Context<'a> {
   pub urm: &'a UrmInfo,
   pub product: Option<Product>,
 }
 
-impl<'a> ProductContext<'a> {
-  fn from_db(urm_info: &'a UrmInfo, db: &'a UrmDb, pn: String)
+impl<'a> Context<'a> {
+  pub fn from_db(urm_info: &'a UrmInfo, db: &'a UrmDb, pn: String)
     -> Result<Self, mongodb::error::Error>
   {
     let product: Option<Product> = match db.collection("products")
@@ -93,29 +79,9 @@ impl<'a> ProductContext<'a> {
         None => None
       };
 
-    Ok(ProductContext {
+    Ok(Context {
       urm: &urm_info,
       product: product,
     })
-  }
-}
-
-#[get("/product/<pn>", format = "json")]
-pub fn api(urm_info: State<UrmInfo>, db: UrmDb, pn: String) -> Result<JsonValue, NotFound<JsonValue>> {
-  let ctx = ProductContext::from_db(&urm_info, &db, pn.clone()).unwrap();
-  if let Some(_) = ctx.product {
-    Ok(json!(ctx))
-  } else {
-    Err(NotFound(json!({ "error": format!("P/N {} does not exist.", pn) })))
-  }
-}
-
-#[get("/product/<pn>", format = "html", rank = 1)]
-pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, pn: String) -> Result<Template, NotFound<()>> {
-  let ctx = ProductContext::from_db(&urm_info, &db, pn.clone()).unwrap();
-  if let Some(_) = ctx.product {
-    Ok(Template::render("product", ctx))
-  } else {
-    Err(NotFound(()))
   }
 }
