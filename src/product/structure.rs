@@ -35,6 +35,7 @@ impl From<mongodb::Document> for Product {
               name: r.get_str("name").unwrap_or("Error").to_string(),
               load: r.get_i64("load").unwrap_or(0) as u64,
               tags: Default::default(), // TODO
+              attributes: Default::default(), // TODO
               has: None, // We don't care about it here
             };
           } else {

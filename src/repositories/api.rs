@@ -18,6 +18,7 @@ impl Context {
           Tag { name: "test repo".to_string() }
         ],
         has: None,
+        attributes: vec![],
       }
     ];
 

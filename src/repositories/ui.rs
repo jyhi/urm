@@ -19,6 +19,7 @@ impl<'a> Context<'a> {
         tags: vec![
           Tag { name: "test repo".to_string() }
         ],
+        attributes: vec![],
         has: None,
       }
     ];
