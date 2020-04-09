@@ -1,6 +1,5 @@
 use serde::Serialize;
 use rocket_contrib::databases::mongodb;
-use crate::repository::Repository;
 use crate::context::{Tag, Attribute};
 
 #[derive(Default, Serialize)]
@@ -8,7 +7,7 @@ pub struct Product {
   pub pn: String,
   pub name: String,
   pub amount: u64,
-  pub r#in: Repository,
+  pub r#in: String,
   pub on: String,
   pub tags: Vec<Tag>,
   pub attributes: Vec<Attribute>,
@@ -29,18 +28,7 @@ impl From<mongodb::Document> for Product {
           p.amount = f.1.as_i64().unwrap_or(0) as u64
         }
         "in" => {
-          if let Some(r) = f.1.as_document() {
-            p.r#in = Repository {
-              ln_p: r.get_str("ln_p").unwrap_or("Error").to_string(),
-              name: r.get_str("name").unwrap_or("Error").to_string(),
-              load: r.get_i64("load").unwrap_or(0) as u64,
-              tags: Default::default(), // TODO
-              attributes: Default::default(), // TODO
-              has: None, // We don't care about it here
-            };
-          } else {
-            p.r#in = Default::default();
-          }
+          p.r#in = f.1.as_str().unwrap_or("Unknown").to_string()
         }
         "on" => {
           p.on = f.1.as_str().unwrap_or("Unknown").to_string()

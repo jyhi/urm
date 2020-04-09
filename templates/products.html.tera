@@ -52,7 +52,7 @@
                 <tr>
                   <th scope="row" class="align-middle">{{ p.pn }}</th>
                   <td class="align-middle">{{ p.name }}</td>
-                  <td class="align-middle">{{ p.in.name }}</td>
+                  <td class="align-middle">{{ p.in }}</td>
                   <td class="align-middle">{{ p.amount }}</td>
                   <td class="align-middle">
                     <div class="btn-group" role="group" aria-label="Operations on {{ p.name }}">
