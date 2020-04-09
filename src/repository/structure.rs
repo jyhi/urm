@@ -10,7 +10,7 @@ pub struct Repository {
   pub load: u64,
   pub tags: Vec<Tag>,
   pub attributes: Vec<Attribute>,
-  pub has: Option<Vec<Product>>,
+  pub has: Vec<Product>,
 }
 
 impl From<mongodb::Document> for Repository {
@@ -27,7 +27,7 @@ impl From<mongodb::Document> for Repository {
         "load" => {
           f.1.as_i64().unwrap_or(0) as u64;
         }
-        // TODO: has
+        // Note: Repository::has is not supposed to be filled here.
         _ => {
           r.attributes.push(
             Attribute {

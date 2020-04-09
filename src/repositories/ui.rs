@@ -20,7 +20,7 @@ impl<'a> Context<'a> {
           Tag { name: "test repo".to_string() }
         ],
         attributes: vec![],
-        has: None,
+        has: vec![],
       }
     ];
 
