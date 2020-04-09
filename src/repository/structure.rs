@@ -19,19 +19,19 @@ impl From<mongodb::Document> for Repository {
       // r: Repository, f: (&String, &Bson)
       match f.0.as_str() {
         "ln_p" => {
-          f.1.as_str().unwrap_or("Unknown").to_string();
+          r.ln_p = f.1.as_str().unwrap_or("Unknown").to_string();
         }
         "name" => {
-          f.1.as_str().unwrap_or("Unknown").to_string();
+          r.name = f.1.as_str().unwrap_or("Unknown").to_string();
         }
         "load" => {
-          f.1.as_i64().unwrap_or(0) as u64;
+          r.load = f.1.as_i64().unwrap_or(0) as u64;
         }
         // Note: Repository::has is not supposed to be filled here.
         _ => {
           r.attributes.push(
             Attribute {
-              key: f.1.to_string(),
+              key: f.0.to_string(),
               value: f.1.to_string(),
             }
           );
