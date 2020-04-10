@@ -26,7 +26,7 @@ fn main() {
 
   rocket::ignite()
     .mount(
-      "/",
+      &urm_config.mount_point,
       routes![
         index::ui,
         index::api,
@@ -42,7 +42,7 @@ fn main() {
         product::api,
       ]
     )
-    .mount("/", StaticFiles::from("static"))
+    .mount(&urm_config.mount_point, StaticFiles::from("static"))
     .attach(SpaceHelmet::default())
     .attach(Template::fairing())
     .attach(UrmDb::fairing())

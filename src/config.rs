@@ -20,6 +20,7 @@ pub struct UrmConfig {
   pub brand: String,
   pub product_name: String,
   pub version: String,
+  pub mount_point: String,
   pub collection: Collection,
 }
 
@@ -29,6 +30,7 @@ impl From<UrmConfigFile> for UrmConfig {
       brand: file.urm.brand.unwrap_or("Unified Repository Manager".to_string()),
       product_name: file.urm.product_name.unwrap_or(env!("CARGO_PKG_NAME").to_string()),
       version: file.urm.version.unwrap_or(env!("CARGO_PKG_VERSION").to_string()),
+      mount_point: file.urm.mount_point.unwrap_or("/".to_string()),
       collection: if let Some(coll) = file.urm.collection {
         Collection {
           products: coll.products.unwrap_or("products".to_string()),
@@ -52,6 +54,7 @@ struct UrmFile {
   brand: Option<String>,
   product_name: Option<String>,
   version: Option<String>,
+  mount_point: Option<String>,
   collection: Option<CollectionFile>,
 }
 
