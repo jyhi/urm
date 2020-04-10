@@ -3,8 +3,8 @@ mod api;
 mod ui;
 
 use rocket::State;
-use rocket::response::status::NotFound;
-use rocket_contrib::json::JsonValue;
+use rocket_contrib::json::Json;
+use rocket_contrib::databases::mongodb;
 use rocket_contrib::templates::Template;
 use crate::database::UrmDb;
 use crate::context::{UrmInfo, PageInfo};
@@ -12,12 +12,15 @@ use crate::context::{UrmInfo, PageInfo};
 pub use structure::Repository;
 
 #[get("/repository/<ln_p>", format = "json")]
-pub fn api(db: UrmDb, ln_p: String) -> Result<JsonValue, NotFound<JsonValue>> {
-  let ctx = api::Context::from_db(&db, ln_p.clone()).unwrap();
-  if let Some(_) = ctx.repository {
-    Ok(json!(ctx))
-  } else {
-    Err(NotFound(json!({ "error": format!("L/N-P {} does not exist.", ln_p) })))
+pub fn api(db: UrmDb, ln_p: String)
+  -> Result<Option<Json<mongodb::Document>>, Json<mongodb::error::Error>>
+{
+  match api::from_db(&db, ln_p) {
+    Ok(r) => match r {
+      Some(doc) => Ok(Some(Json(doc))),
+      None => Ok(None)
+    },
+    Err(e) => Err(Json(e))
   }
 }
 
