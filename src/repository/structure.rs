@@ -14,8 +14,8 @@ pub struct Repository {
 }
 
 impl From<mongodb::Document> for Repository {
-  fn from(document: mongodb::Document) -> Self {
-    document.iter().fold(Default::default(), |mut r, f| {
+  fn from(doc: mongodb::Document) -> Self {
+    doc.iter().fold(Default::default(), |mut r, f| {
       // r: Repository, f: (&String, &Bson)
       match f.0.as_str() {
         "ln_p" => {

@@ -10,7 +10,7 @@ pub fn from_db(db: &UrmDb, pn: String)
   -> Result<Option<mongodb::Document>, mongodb::error::Error>
 {
   match db.collection("products").find_one(Some(doc!{ "pn": pn }), None)? {
-    Some(document) => Ok(Some(document)),
+    Some(doc) => Ok(Some(doc)),
     None => Ok(None)
   }
 }

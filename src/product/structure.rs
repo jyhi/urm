@@ -14,8 +14,8 @@ pub struct Product {
 }
 
 impl From<mongodb::Document> for Product {
-  fn from(document: mongodb::Document) -> Self {
-    document.iter().fold(Default::default(), |mut p, f| {
+  fn from(doc: mongodb::Document) -> Self {
+    doc.iter().fold(Default::default(), |mut p, f| {
       // p: Product, f: (&'a String, &'a Bson)
       match f.0.as_str() {
         "pn" => {
