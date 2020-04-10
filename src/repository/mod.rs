@@ -7,7 +7,7 @@ use rocket_contrib::json::Json;
 use rocket_contrib::databases::mongodb;
 use rocket_contrib::templates::Template;
 use crate::database::UrmDb;
-use crate::context::UrmInfo;
+use crate::config::UrmConfig;
 
 pub use structure::Repository;
 
@@ -25,10 +25,10 @@ pub fn api(db: UrmDb, ln_p: String)
 }
 
 #[get("/repository/<ln_p>", format = "html", rank = 1)]
-pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, ln_p: String)
+pub fn ui(config: State<UrmConfig>, db: UrmDb, ln_p: String)
   -> Result<Option<Template>, mongodb::error::Error>
 {
-  match ui::Context::from_db(&db, &urm_info, ln_p) {
+  match ui::Context::from_db(&db, &config, ln_p) {
     Ok(r) => match r {
       Some(ctx) => Ok(Some(Template::render("repository", ctx))),
       None => Ok(None)

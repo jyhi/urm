@@ -7,15 +7,15 @@ use rocket_contrib::json::Json;
 use rocket_contrib::databases::mongodb;
 use rocket_contrib::templates::Template;
 use crate::database::UrmDb;
-use crate::context::UrmInfo;
+use crate::config::UrmConfig;
 
 pub use structure::Product;
 
 #[get("/product/<pn>", format = "json")]
-pub fn api(db: UrmDb, pn: String)
+pub fn api(config: State<UrmConfig>, db: UrmDb, pn: String)
   -> Result<Option<Json<mongodb::Document>>, Json<mongodb::error::Error>>
 {
-  match api::from_db(&db, pn) {
+  match api::from_db(&db, &config, pn) {
     Ok(r) => match r {
       Some(doc) => Ok(Some(Json(doc))),
       None => Ok(None)
@@ -25,10 +25,10 @@ pub fn api(db: UrmDb, pn: String)
 }
 
 #[get("/product/<pn>", format = "html", rank = 1)]
-pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, pn: String)
+pub fn ui(config: State<UrmConfig>, db: UrmDb, pn: String)
   -> Result<Option<Template>, mongodb::error::Error>
 {
-  match ui::Context::from_db(&db, &urm_info, pn) {
+  match ui::Context::from_db(&db, &config, pn) {
     Ok(r) => match r {
       Some(ctx) => Ok(Some(Template::render("product", ctx))),
       None => Ok(None)

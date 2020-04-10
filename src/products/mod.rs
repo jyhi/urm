@@ -6,7 +6,7 @@ use rocket_contrib::json::Json;
 use rocket_contrib::databases::mongodb;
 use rocket_contrib::templates::Template;
 use crate::database::UrmDb;
-use crate::context::UrmInfo;
+use crate::config::UrmConfig;
 
 #[get("/products?<page>&<nitem>", format = "json")]
 pub fn api(db: UrmDb, page: Option<u64>, nitem: Option<u64>)
@@ -22,7 +22,7 @@ pub fn api(db: UrmDb, page: Option<u64>, nitem: Option<u64>)
 }
 
 #[get("/products?<page>&<nitem>", format = "html", rank = 1)]
-pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, page: Option<u64>, nitem: Option<u64>)
+pub fn ui(config: State<UrmConfig>, db: UrmDb, page: Option<u64>, nitem: Option<u64>)
   -> Result<Template, mongodb::error::Error>
 {
   let page = page.unwrap_or(1);
@@ -30,7 +30,7 @@ pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, page: Option<u64>, nitem: Option<
 
   Ok(
     Template::render(
-      "products", ui::Context::from_db(&db, &urm_info, page, nitem)?
+      "products", ui::Context::from_db(&db, &config, page, nitem)?
     )
   )
 }

@@ -18,20 +18,11 @@ mod product;
 use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
 use rocket_contrib::serve::StaticFiles;
-use config::UrmConfig;
-use context::UrmInfo;
 use database::UrmDb;
 
 fn main() {
   // TODO: Read file name from command line
-  let urm_config = UrmConfig::from_file("urm.toml".to_string());
-
-  let mut urm_info: UrmInfo = Default::default();
-  if let Some(urm) = urm_config.urm {
-    if let Some(brand) = urm.brand {
-      urm_info.brand = brand;
-    }
-  }
+  let urm_config = config::read_config_file("urm.toml".to_string());
 
   rocket::ignite()
     .mount(
@@ -55,6 +46,6 @@ fn main() {
     .attach(SpaceHelmet::default())
     .attach(Template::fairing())
     .attach(UrmDb::fairing())
-    .manage(urm_info)
+    .manage(urm_config)
     .launch();
 }
