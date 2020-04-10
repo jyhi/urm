@@ -28,8 +28,8 @@ impl<'a> Context<'a> {
       .find(None, None)?
       .skip(nskip as usize)
       .take(nitem as usize)
-      .filter_map(|p| p.ok()) // XXX: TODO: Error handling
-      .map(|p| Repository::from(p))
+      .filter_map(|r| r.ok()) // XXX: TODO: Error handling
+      .map(|r| Repository::from(r))
       .collect();
 
     Ok(Context {

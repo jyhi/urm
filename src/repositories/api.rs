@@ -12,7 +12,7 @@ pub fn from_db(db: &UrmDb, page: u64, nitem: u64)
       .find(None, None)?
       .skip(nskip as usize)
       .take(nitem as usize)
-      .filter_map(|p| p.ok()) // XXX: TODO: Error handling
+      .filter_map(|r| r.ok()) // XXX: TODO: Error handling
       .collect()
   )
 }
