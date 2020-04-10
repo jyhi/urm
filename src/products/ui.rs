@@ -8,23 +8,33 @@ use crate::context::{UrmInfo, PageInfo};
 #[derive(Serialize)]
 pub struct Context<'a> {
   pub urm: &'a UrmInfo,
-  pub page: &'a PageInfo,
+  pub page: PageInfo,
   pub products: Vec<Product>,
 }
 
 impl<'a> Context<'a> {
-  pub fn from_db(db: &'a UrmDb, urm_info: &'a UrmInfo, page_info: &'a PageInfo)
+  pub fn from_db(db: &'a UrmDb, urm_info: &'a UrmInfo, page: u64, nitem: u64)
     -> Result<Self, mongodb::error::Error>
   {
+    let nprod = db.collection("products").count(None, None)? as u64;
+    let nskip = (page - 1) * nitem;
+    let page_info = PageInfo {
+      current: page,
+      min: 1,
+      max: nprod / (nitem + 1) + 1
+    };
+
     let products = db.collection("products")
       .find(None, None)?
+      .skip(nskip as usize)
+      .take(nitem as usize)
       .filter_map(|p| p.ok()) // XXX: TODO: Error handling
       .map(|p| Product::from(p))
       .collect();
 
     Ok(Context {
       urm: &urm_info,
-      page: &page_info,
+      page: page_info,
       products: products,
     })
   }
