@@ -13,7 +13,7 @@ pub struct Context<'a> {
 }
 
 impl<'a> Context<'a> {
-  pub fn from_db(urm_info: &'a UrmInfo, page_info: &'a PageInfo, db: &'a UrmDb)
+  pub fn from_db(db: &'a UrmDb, urm_info: &'a UrmInfo, page_info: &'a PageInfo)
     -> Result<Self, mongodb::error::Error>
   {
     let products = db.collection("products")

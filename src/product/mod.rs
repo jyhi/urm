@@ -28,7 +28,7 @@ pub fn api(db: UrmDb, pn: String)
 pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, pn: String)
   -> Result<Option<Template>, mongodb::error::Error>
 {
-  match ui::Context::from_db(&urm_info, &db, pn) {
+  match ui::Context::from_db(&db, &urm_info, pn) {
     Ok(r) => match r {
       Some(ctx) => Ok(Some(Template::render("product", ctx))),
       None => Ok(None)

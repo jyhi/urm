@@ -17,7 +17,7 @@ pub struct Context<'a> {
 }
 
 impl<'a> Context<'a> {
-  pub fn from_db(urm_info: &'a UrmInfo, page_info: &'a PageInfo, db: &UrmDb, ln_p: String)
+  pub fn from_db(db: &UrmDb, urm_info: &'a UrmInfo, page_info: &'a PageInfo, ln_p: String)
     -> Result<Option<Self>, mongodb::error::Error>
   {
     match db.collection("repositories")

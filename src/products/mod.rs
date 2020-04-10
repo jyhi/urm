@@ -26,7 +26,7 @@ pub fn ui(urm_info: State<UrmInfo>, db: UrmDb)
 
   Ok(
     Template::render(
-      "products", ui::Context::from_db(&urm_info, &page_info, &db)?
+      "products", ui::Context::from_db(&db, &urm_info, &page_info)?
     )
   )
 }

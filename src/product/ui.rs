@@ -16,7 +16,7 @@ pub struct Context<'a> {
 }
 
 impl<'a> Context<'a> {
-  pub fn from_db(urm_info: &'a UrmInfo, db: &'a UrmDb, pn: String)
+  pub fn from_db(db: &'a UrmDb, urm_info: &'a UrmInfo, pn: String)
     -> Result<Option<Self>, mongodb::error::Error>
   {
     match db.collection("products").find_one(Some(doc!{ "pn": pn }), None)? {

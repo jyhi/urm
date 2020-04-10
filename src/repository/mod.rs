@@ -30,7 +30,7 @@ pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, ln_p: String)
 {
   let page_info = PageInfo { current: 1, min: 1, max: 1 };
 
-  match ui::Context::from_db(&urm_info, &page_info, &db, ln_p) {
+  match ui::Context::from_db(&db, &urm_info, &page_info, ln_p) {
     Ok(r) => match r {
       Some(ctx) => Ok(Some(Template::render("repository", ctx))),
       None => Ok(None)
