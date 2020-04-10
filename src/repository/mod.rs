@@ -7,7 +7,7 @@ use rocket_contrib::json::Json;
 use rocket_contrib::databases::mongodb;
 use rocket_contrib::templates::Template;
 use crate::database::UrmDb;
-use crate::context::{UrmInfo, PageInfo};
+use crate::context::UrmInfo;
 
 pub use structure::Repository;
 
@@ -28,9 +28,7 @@ pub fn api(db: UrmDb, ln_p: String)
 pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, ln_p: String)
   -> Result<Option<Template>, mongodb::error::Error>
 {
-  let page_info = PageInfo { current: 1, min: 1, max: 1 };
-
-  match ui::Context::from_db(&db, &urm_info, &page_info, ln_p) {
+  match ui::Context::from_db(&db, &urm_info, ln_p) {
     Ok(r) => match r {
       Some(ctx) => Ok(Some(Template::render("repository", ctx))),
       None => Ok(None)

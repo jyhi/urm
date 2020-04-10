@@ -61,47 +61,20 @@
       </div>
 
       <hr />
-
-      <div class="row mt-3">
+      {# Other attributes #}
+      <div class="row row-cols-1 row-cols-md-3">
+        {% for attr in repository.attributes %}
         <div class="col">
-          <div class="card">
+          <div class="card mt-3">
             <div class="card-header">
-              List of Products
+              {{ attr.key }}
             </div>
             <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-striped">
-                  <thead>
-                    <tr>
-                      <th scope="col">P/N</th>
-                      <th scope="col">Name</th>
-                      <th scope="col">Amount</th>
-                      <th scope="col">Operations</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {% for p in repository.has %}
-                    <tr>
-                      <th scope="row" class="align-middle">{{ p.pn }}</th>
-                      <td class="align-middle">{{ p.name }}</td>
-                      <td class="align-middle">{{ p.amount }}</td>
-                      <td class="align-middle">
-                        <div class="btn-group" role="group" aria-label="Operations on {{ p.pn }}">
-                          <a href="/product/{{ p.pn }}" class="btn btn-outline-secondary">View</a>
-                          <a href="#" class="btn btn-outline-secondary">In</a>
-                          <a href="#" class="btn btn-outline-secondary">Out</a>
-                        </div>
-                      </td>
-                    </tr>
-                    {% endfor %}
-                  </tbody>
-                </table>
-              </div>
-              {# Pagination #}
-              {{ pagination::put(min=page.min, current=page.current, max=page.max) }}
+              {{ attr.value }}
             </div>
           </div>
         </div>
+        {% endfor %}
       </div>
     </div>
     {# Footer #}
