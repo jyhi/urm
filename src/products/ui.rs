@@ -13,10 +13,13 @@ pub struct Context<'a> {
 }
 
 impl<'a> Context<'a> {
-  pub fn from_db(urm_info: &'a UrmInfo, page_info: &'a PageInfo, db: &'a UrmDb) -> Result<Self, mongodb::error::Error> {
-    let products: Vec<Product> = db.collection("products")
+  pub fn from_db(urm_info: &'a UrmInfo, page_info: &'a PageInfo, db: &'a UrmDb)
+    -> Result<Self, mongodb::error::Error>
+  {
+    let products = db.collection("products")
       .find(None, None)?
-      .map(|p| Product::from(p.unwrap_or(Default::default()))) // XXX: TODO: Error handling
+      .filter_map(|p| p.ok()) // XXX: TODO: Error handling
+      .map(|p| Product::from(p))
       .collect();
 
     Ok(Context {

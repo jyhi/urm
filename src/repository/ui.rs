@@ -13,23 +13,22 @@ use super::Repository;
 pub struct Context<'a> {
   pub urm: &'a UrmInfo,
   pub page: &'a PageInfo,
-  pub repository: Option<Repository>,
+  pub repository: Repository,
 }
 
 impl<'a> Context<'a> {
   pub fn from_db(urm_info: &'a UrmInfo, page_info: &'a PageInfo, db: &UrmDb, ln_p: String)
-    -> Result<Self, mongodb::error::Error>
+    -> Result<Option<Self>, mongodb::error::Error>
   {
-    let repository: Option<Repository> = match db.collection("repositories")
-      .find_one(Some(doc!{ "ln_p": ln_p }), None)? {
-        Some(doc) => Some(Repository::from(doc)),
-        None => None
-      };
-
-    Ok(Context {
-      urm: &urm_info,
-      page: &page_info, // TODO: Pagination
-      repository: repository,
-    })
+    match db.collection("repositories")
+      .find_one(Some(doc!{ "ln_p": ln_p }), None)?
+    {
+      Some(doc) => Ok(Some(Context {
+        urm: &urm_info,
+        page: &page_info,
+        repository: Repository::from(doc)
+      })),
+      None => Ok(None)
+    }
   }
 }

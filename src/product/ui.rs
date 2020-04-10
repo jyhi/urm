@@ -12,22 +12,19 @@ use super::structure::Product;
 #[derive(Serialize)]
 pub struct Context<'a> {
   pub urm: &'a UrmInfo,
-  pub product: Option<Product>,
+  pub product: Product,
 }
 
 impl<'a> Context<'a> {
   pub fn from_db(urm_info: &'a UrmInfo, db: &'a UrmDb, pn: String)
-    -> Result<Self, mongodb::error::Error>
+    -> Result<Option<Self>, mongodb::error::Error>
   {
-    let product: Option<Product> = match db.collection("products")
-      .find_one(Some(doc!{ "pn": pn }), None)? {
-        Some(p) => Some(Product::from(p)),
-        None => None
-      };
-
-    Ok(Context {
-      urm: &urm_info,
-      product: product,
-    })
+    match db.collection("products").find_one(Some(doc!{ "pn": pn }), None)? {
+      Some(doc) => Ok(Some(Context {
+        urm: &urm_info,
+        product: Product::from(doc)
+      })),
+      None => Ok(None)
+    }
   }
 }

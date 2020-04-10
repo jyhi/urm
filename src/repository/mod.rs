@@ -25,13 +25,16 @@ pub fn api(db: UrmDb, ln_p: String)
 }
 
 #[get("/repository/<ln_p>", format = "html", rank = 1)]
-pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, ln_p: String) -> Result<Template, ()> {
+pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, ln_p: String)
+  -> Result<Option<Template>, mongodb::error::Error>
+{
   let page_info = PageInfo { current: 1, min: 1, max: 1 };
 
-  let ctx = ui::Context::from_db(&urm_info, &page_info, &db, ln_p).unwrap();
-  if let Some(_) = ctx.repository {
-    Ok(Template::render("repository", ctx))
-  } else {
-    Err(())
+  match ui::Context::from_db(&urm_info, &page_info, &db, ln_p) {
+    Ok(r) => match r {
+      Some(ctx) => Ok(Some(Template::render("repository", ctx))),
+      None => Ok(None)
+    }
+    Err(e) => Err(e)
   }
 }

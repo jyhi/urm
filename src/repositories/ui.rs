@@ -16,12 +16,13 @@ impl<'a> Context<'a> {
   pub fn from_db(urm_info: &'a UrmInfo, page_info: &'a PageInfo, db: &'a UrmDb)
     -> Result<Self, mongodb::error::Error>
   {
-    let repositories: Vec<Repository> = db.collection("repositories")
+    let repositories = db.collection("repositories")
       .find(None, None)?
-      .map(|r| Repository::from(r.unwrap_or(Default::default()))) // XXX: TODO: Error handling
+      .filter_map(|p| p.ok()) // XXX: TODO: Error handling
+      .map(|p| Repository::from(p))
       .collect();
 
-    Ok(Context{
+    Ok(Context {
       urm: &urm_info,
       page: &page_info,
       repositories: repositories,

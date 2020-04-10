@@ -19,11 +19,14 @@ pub fn api(db: UrmDb)
 }
 
 #[get("/products", format = "html", rank = 1)]
-pub fn ui(urm_info: State<UrmInfo>, db: UrmDb) -> Result<Template, ()> {
+pub fn ui(urm_info: State<UrmInfo>, db: UrmDb)
+  -> Result<Template, mongodb::error::Error>
+{
   let page_info = PageInfo { current: 1, min: 1, max: 1 };
 
-  match ui::Context::from_db(&urm_info, &page_info, &db) {
-    Ok(ctx) => Ok(Template::render("products", ctx)),
-    Err(_) => Err(())
-  }
+  Ok(
+    Template::render(
+      "products", ui::Context::from_db(&urm_info, &page_info, &db)?
+    )
+  )
 }

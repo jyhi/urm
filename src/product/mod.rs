@@ -3,7 +3,6 @@ mod api;
 mod ui;
 
 use rocket::State;
-use rocket::response::status::NotFound;
 use rocket_contrib::json::Json;
 use rocket_contrib::databases::mongodb;
 use rocket_contrib::templates::Template;
@@ -26,11 +25,14 @@ pub fn api(db: UrmDb, pn: String)
 }
 
 #[get("/product/<pn>", format = "html", rank = 1)]
-pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, pn: String) -> Result<Template, NotFound<()>> {
-  let ctx = ui::Context::from_db(&urm_info, &db, pn).unwrap();
-  if let Some(_) = ctx.product {
-    Ok(Template::render("product", ctx))
-  } else {
-    Err(NotFound(()))
+pub fn ui(urm_info: State<UrmInfo>, db: UrmDb, pn: String)
+  -> Result<Option<Template>, mongodb::error::Error>
+{
+  match ui::Context::from_db(&urm_info, &db, pn) {
+    Ok(r) => match r {
+      Some(ctx) => Ok(Some(Template::render("product", ctx))),
+      None => Ok(None)
+    }
+    Err(e) => Err(e)
   }
 }
