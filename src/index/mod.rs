@@ -1,12 +1,8 @@
 use rocket::response::Redirect;
-use rocket_contrib::json::JsonValue;
 
 #[get("/", format = "json")]
-pub fn api() -> JsonValue {
-  json!({
-    "error": true,
-    "desc": "Not implemented"
-  })
+pub fn api() -> Redirect {
+  Redirect::to("/dashboard")
 }
 
 #[get("/", format = "html", rank = 1)]
