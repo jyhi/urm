@@ -18,7 +18,7 @@
         <div class="alert alert-warning mt-3">
           <span class="sr-only">Warning:</span>
           <strong>JavaScript is disabled.</strong>
-          Some parts of this page will not function.
+          Some parts of this page may not function.
         </div>
       </noscript>
       {# Quick views #}
