@@ -76,6 +76,29 @@
         </div>
         {% endfor %}
       </div>
+
+      <hr />
+      {# Last activities #}
+      <div class="row mt-3">
+        <div class="col">
+          <div class="card">
+            <div class="card-header">
+              <div class="row">
+                <div class="col">
+                  Last 10 Events
+                </div>
+                <div class="col-auto">
+                  <a href="#" class="card-link">View All</a>
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              Coming Soon&trade;
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     </div>
     {# Footer #}
     {% include "include/footer" %}
