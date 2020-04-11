@@ -60,7 +60,7 @@
         </div>
       </div>
 
-      <hr />
+      <hr class="mb-0" />
       {# Other attributes #}
       <div class="row row-cols-1 row-cols-md-3">
         {% for attr in repository.attributes %}
