@@ -3,7 +3,7 @@ use rocket_contrib::databases::mongodb;
 use crate::product::Product;
 use crate::context::{Tag, Attribute};
 
-#[derive(Default, Serialize)]
+#[derive(Serialize)]
 pub struct Repository {
   pub ln_p: String,
   pub name: String,
@@ -11,6 +11,19 @@ pub struct Repository {
   pub tags: Vec<Tag>,
   pub attributes: Vec<Attribute>,
   pub has: Vec<Product>,
+}
+
+impl Default for Repository {
+  fn default() -> Self {
+    Repository {
+      ln_p: "Unknown".to_string(),
+      name: "Unknown".to_string(),
+      load: 0,
+      tags: vec![],
+      attributes: vec![],
+      has: vec![],
+    }
+  }
 }
 
 impl From<mongodb::Document> for Repository {

@@ -2,7 +2,7 @@ use serde::Serialize;
 use rocket_contrib::databases::mongodb;
 use crate::context::{Tag, Attribute};
 
-#[derive(Default, Serialize)]
+#[derive(Serialize)]
 pub struct Product {
   pub pn: String,
   pub name: String,
@@ -11,6 +11,20 @@ pub struct Product {
   pub on: String,
   pub tags: Vec<Tag>,
   pub attributes: Vec<Attribute>,
+}
+
+impl Default for Product {
+  fn default() -> Self {
+    Product {
+      pn: "Unknown".to_string(),
+      name: "Unknown".to_string(),
+      amount: 0,
+      r#in: "Unknown".to_string(),
+      on: "Unknown".to_string(),
+      tags: vec![],
+      attributes: vec![],
+    }
+  }
 }
 
 impl From<mongodb::Document> for Product {
