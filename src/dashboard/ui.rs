@@ -16,7 +16,7 @@ impl<'a> Context<'a> {
   pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig)
     -> Result<Self, mongodb::error::Error>
   {
-    let ops = ["matches", ">", "≥", "<", "≤", "="].iter()
+    let ops = ["matches"].iter()
       .map(|op| op.to_string())
       .collect();
     let collections = db.collection_names(None)?;

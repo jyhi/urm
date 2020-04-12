@@ -86,7 +86,7 @@
           </div>
           <div class="col-auto mt-1 mt-md-0">
             <label for="search_in" class="sr-only">In collection</label>
-            <select id="search_in" name="in" class="custom-select">
+            <select id="search_in" name="coll" class="custom-select">
               {% for coll in search.collections %}
               <option value="{{ coll }}">{{ coll }}</option>
               {% endfor %}

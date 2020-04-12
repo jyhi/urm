@@ -1,0 +1,70 @@
+{% import "include/header" as header %}
+{% import "include/tags" as tags %}
+{% import "include/pagenav" as pagination %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    {% include "include/meta-common" %}
+    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+    <title>Search Results - {{ urm.brand }}</title>
+  </head>
+
+  <body>
+    <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
+
+    {{ header::put() }}
+
+    <div id="content" class="container">
+      {# Warning for JavaScript presence #}
+      <noscript>
+        <div class="alert alert-warning mt-3">
+          <span class="sr-only">Warning:</span>
+          <strong>JavaScript is disabled.</strong>
+          Some parts of this page may not function.
+        </div>
+      </noscript>
+      {# Title #}
+      <div class="row mt-3">
+        <div class="col">
+          <h1 class="display-3">
+            <span lang="en">Search Results</span>
+          </h1>
+        </div>
+      </div>
+      {# List of Results #}
+      <div class="row mt-3">
+        <div class="col">
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">Number</th>
+                <th scope="col">Name</th>
+                <th scope="col">{{ search.key }}</th>
+                <th scope="col">Operations</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for r in search.results %}
+              <tr>
+                <th scope="row" class="align-middle">{{ r.n }}</th>
+                  <td class="align-middle">{{ r.name }}</td>
+                  <td class="align-middle">{{ r.value }}</td>
+                  <td class="align-middle">
+                    <div class="btn-group" role="group" aria-label="Operations on {{ r.name }}">
+                      <a href="{{ search.base_path }}/{{ r.n }}" class="btn btn-outline-secondary">View</a>
+                    </div>
+                  </td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    {# Footer #}
+    {% include "include/footer" %}
+  </body>
+
+  <script src="/js/jquery-3.4.1.slim.min.js"></script>
+  <script src="/js/bootstrap.bundle.min.js"></script>
+</html>

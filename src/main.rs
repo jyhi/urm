@@ -14,6 +14,7 @@ mod repositories;
 mod repository;
 mod products;
 mod product;
+mod search;
 
 use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
@@ -40,6 +41,8 @@ fn main() {
         products::api,
         product::ui,
         product::api,
+        search::ui,
+        search::api,
       ]
     )
     .mount(&urm_config.mount_point, StaticFiles::from("static"))
