@@ -29,19 +29,18 @@ impl<'a> Context<'a> {
       max: nprod / (nitem + 1) + 1
     };
 
-    let repositories = db.collection("repositories")
+    let mut repositories: Vec<Repository> = db.collection("repositories")
       .find(None, None)?
       .skip(nskip as usize)
       .take(nitem as usize)
       .filter_map(|r| r.ok()) // XXX: TODO: Error handling
       .map(|r| Repository::from(r))
-      .map(|mut r| {
-        r.load = db.collection("products")
-          .count(Some(doc!{ "in": &r.ln_p }), None)
-          .unwrap_or(0) as u64;
-        r
-      })
       .collect();
+
+    for mut r in &mut repositories {
+      r.load = db.collection("products")
+        .count(Some(doc!{ "in": &r.ln_p }), None)? as u64;
+    }
 
     Ok(Context {
       urm: &config,
