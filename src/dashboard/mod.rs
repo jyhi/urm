@@ -10,8 +10,12 @@ use crate::config::UrmConfig;
 
 #[get("/dashboard", format = "json")]
 pub fn api(config: State<UrmConfig>, db: UrmDb)
-  -> Result<Json<api::Context>, mongodb::error::Error> {
-  Ok(Json(api::Context::from_db(&db, &config)?))
+  -> Result<Json<api::Context>, Json<mongodb::error::Error>>
+{
+  match api::Context::from_db(&db, &config) {
+    Ok(r) => Ok(Json(r)),
+    Err(e) => Err(Json(e))
+  }
 }
 
 #[get("/dashboard", format = "html", rank = 1)]
