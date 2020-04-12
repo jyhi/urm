@@ -28,7 +28,7 @@ impl<'a> Context<'a> {
       }),
       None => None
     }.and_then(|mut ctx| {
-      // Override Repository::has with the real number
+      // Override Repository::load with the real number
       ctx.repository.load = db.collection("products")
         .count(Some(doc!{ "in": &ctx.repository.ln_p }), None)
         .unwrap_or(0) as u64;
