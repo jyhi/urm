@@ -1,6 +1,10 @@
 use serde::Serialize;
 use rocket_contrib::databases::mongodb;
-use rocket_contrib::databases::mongodb::db::ThreadedDatabase;
+use rocket_contrib::databases::mongodb::{
+  bson,
+  doc,
+  db::ThreadedDatabase,
+};
 use crate::database::UrmDb;
 use crate::repository::Repository;
 use crate::context::PageInfo;
@@ -31,6 +35,12 @@ impl<'a> Context<'a> {
       .take(nitem as usize)
       .filter_map(|r| r.ok()) // XXX: TODO: Error handling
       .map(|r| Repository::from(r))
+      .map(|mut r| {
+        r.load = db.collection("products")
+          .count(Some(doc!{ "in": &r.ln_p }), None)
+          .unwrap_or(0) as u64;
+        r
+      })
       .collect();
 
     Ok(Context {
