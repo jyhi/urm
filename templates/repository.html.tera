@@ -99,7 +99,6 @@
         </div>
       </div>
     </div>
-    </div>
     {# Footer #}
     {% include "include/footer" %}
   </body>
