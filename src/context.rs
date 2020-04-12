@@ -17,3 +17,9 @@ pub struct PageInfo {
   pub min: u64,
   pub max: u64,
 }
+
+#[derive(Serialize)]
+pub struct SearchInfo {
+  pub ops: Vec<String>,
+  pub collections: Vec<String>,
+}

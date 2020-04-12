@@ -1,25 +1,38 @@
 use serde::Serialize;
+use rocket_contrib::databases::mongodb;
 use rocket_contrib::databases::mongodb::db::ThreadedDatabase;
 use crate::database::UrmDb;
 use crate::config::UrmConfig;
+use crate::context::SearchInfo;
 
 #[derive(Serialize)]
 pub struct Context<'a> {
   pub urm: &'a UrmConfig,
+  pub search: SearchInfo,
   pub nprod: u64,
 }
 
 impl<'a> Context<'a> {
-  pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig) -> Self {
-    // TODO: Error handling
-    // XXX: Why count returns Result<i64>?
-    let nprod = db.collection(&config.collection.products)
-      .count(None, None)
-      .unwrap() as u64;
+  pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig)
+    -> Result<Self, mongodb::error::Error>
+  {
+    let ops = ["matches", ">", "≥", "<", "≤", "="].iter()
+      .map(|op| op.to_string())
+      .collect();
+    let collections = db.collection_names(None)?;
 
-    Context {
+    let search_info = SearchInfo {
+      ops: ops,
+      collections: collections,
+    };
+
+    let nprod = db.collection(&config.collection.products)
+      .count(None, None)? as u64;
+
+    Ok(Context {
       urm: config,
+      search: search_info,
       nprod: nprod,
-    }
+    })
   }
 }

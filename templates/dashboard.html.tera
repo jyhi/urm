@@ -68,13 +68,12 @@
         </div>
         <div class="col-auto mt-1 mt-md-0">
           <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            contains
+            {{ search.ops | first }}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">is</a>
-            <a class="dropdown-item" href="#">is not</a>
-            <a class="dropdown-item" href="#">contains</a>
-            <a class="dropdown-item" href="#">does not contain</a>
+            {% for op in search.ops %}
+            <button class="dropdown-item">{{ op }}</button>
+            {% endfor %}
           </div>
         </div>
         <div class="col mt-1 mt-md-0">
@@ -86,11 +85,12 @@
         </div>
         <div class="col-auto mt-1 mt-md-0">
           <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            products
+            {{ search.collections | first }}
           </button>
           <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">repositories</a>
-            <a class="dropdown-item" href="#">products</a>
+            {% for coll in search.collections %}
+            <button class="dropdown-item">{{ coll }}</button>
+            {% endfor %}
           </div>
         </div>
         <div class="col col-md-auto mt-1 mt-md-0">
