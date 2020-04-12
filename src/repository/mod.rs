@@ -24,14 +24,11 @@ pub fn api(config: State<UrmConfig>, db: UrmDb, ln_p: String)
   }
 }
 
-#[get("/repository/<ln_p>?<page>&<nitem>", format = "html", rank = 1)]
-pub fn ui(config: State<UrmConfig>, db: UrmDb, ln_p: String, page: Option<u64>, nitem: Option<u64>)
+#[get("/repository/<ln_p>", format = "html", rank = 1)]
+pub fn ui(config: State<UrmConfig>, db: UrmDb, ln_p: String)
   -> Result<Option<Template>, mongodb::error::Error>
 {
-  let page = page.unwrap_or(1);
-  let nitem = nitem.unwrap_or(10);
-
-  match ui::Context::from_db(&db, &config, ln_p, page, nitem) {
+  match ui::Context::from_db(&db, &config, ln_p) {
     Ok(r) => match r {
       Some(ctx) => Ok(Some(Template::render("repository", ctx))),
       None => Ok(None)

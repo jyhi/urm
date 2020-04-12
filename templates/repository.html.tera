@@ -98,59 +98,7 @@
           </div>
         </div>
       </div>
-      {# List of products #}
-      <div class="row mt-3">
-        <div class="col">
-          <div class="card">
-            <div class="card-header">
-              <div class="row">
-                <div class="col">
-                  Products in {{ repository.name }}
-                </div>
-                <div class="col-auto">
-                  <a href="#" class="card-link">View All</a>
-                </div>
-              </div>
-            </div>
-            <div class="card-body">
-              <div class="row mt-3">
-                <div class="col">
-                  <div class="table-responsive">
-                    <table class="table table-striped">
-                      <thead>
-                        <tr>
-                          <th scope="col">P/N</th>
-                          <th scope="col">Name</th>
-                          <th scope="col">Amount</th>
-                          <th scope="col">Operations</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {% for p in repository.has %}
-                        <tr>
-                          <th scope="row" class="align-middle">{{ p.pn }}</th>
-                          <td class="align-middle">{{ p.name }}</td>
-                          <td class="align-middle">{{ p.amount }}</td>
-                          <td class="align-middle">
-                            <div class="btn-group" role="group" aria-label="Operations on {{ p.name }}">
-                              <a href="/product/{{ p.pn }}" class="btn btn-outline-secondary">View</a>
-                              <a href="#" class="btn btn-outline-secondary">In</a>
-                              <a href="#" class="btn btn-outline-secondary">Out</a>
-                            </div>
-                          </td>
-                        </tr>
-                        {% endfor %}
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-              {# Pagination #}
-              {{ pagination::put(min=page.min, current=page.current, max=page.max) }}
-            </div>
-          </div>
-        </div>
-      </div>
+    </div>
     </div>
     {# Footer #}
     {% include "include/footer" %}
