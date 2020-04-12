@@ -1,4 +1,5 @@
 use serde::Serialize;
+use rocket_contrib::databases::mongodb;
 use rocket_contrib::databases::mongodb::db::ThreadedDatabase;
 use crate::database::UrmDb;
 use crate::config::UrmConfig;
@@ -9,15 +10,14 @@ pub struct Context {
 }
 
 impl Context {
-  pub fn from_db(db: &UrmDb, config: &UrmConfig) -> Self {
-    // TODO: Error handling
-    // XXX: Why count returns Result<i64>?
+  pub fn from_db(db: &UrmDb, config: &UrmConfig)
+    -> Result<Self, mongodb::error::Error>
+  {
     let nprod = db.collection(&config.collection.products)
-      .count(None, None)
-      .unwrap() as u64;
+      .count(None, None)? as u64;
 
-    Context {
+    Ok(Context {
       nprod: nprod,
-    }
+    })
   }
 }
