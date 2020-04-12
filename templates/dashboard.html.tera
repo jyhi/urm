@@ -62,41 +62,41 @@
 
       <hr />
       {# Searching #}
-      <div class="form-row mt-3">
-        <div class="col-12 col-md-3">
-          <input type="text" class="form-control" placeholder="key">
-        </div>
-        <div class="col-auto mt-1 mt-md-0">
-          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ search.ops | first }}
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {% for op in search.ops %}
-            <button class="dropdown-item">{{ op }}</button>
-            {% endfor %}
+      <form method="get" action="/search">
+        <div class="form-row mt-3">
+          <div class="col-12 col-md-3">
+            <label for="search_key" class="sr-only">Key</label>
+            <input required id="search_key" name="k" type="text" class="form-control" placeholder="key">
+          </div>
+          <div class="col-auto mt-1 mt-md-0">
+            <label for="search_op" class="sr-only">Operation</label>
+            <select id="search_op" name="op" class="custom-select">
+              {% for op in search.ops %}
+              <option value="{{ op }}">{{ op }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col mt-1 mt-md-0">
+            <label for="search_value" class="sr-only">Value</label>
+            <input required id="search_value" name="v" type="text" class="form-control" placeholder="value">
+          </div>
+          <div class="w-100 d-block d-md-none"></div>
+          <div class="col-auto mt-1 mt-md-0 d-flex">
+            <div class="my-auto ml-3 mr-1 mx-md-1">in</div>
+          </div>
+          <div class="col-auto mt-1 mt-md-0">
+            <label for="search_in" class="sr-only">In collection</label>
+            <select id="search_in" name="in" class="custom-select">
+              {% for coll in search.collections %}
+              <option value="{{ coll }}">{{ coll }}</option>
+              {% endfor %}
+            </select>
+          </div>
+          <div class="col col-md-auto mt-1 mt-md-0">
+            <input type="submit" value="Search" class="btn btn-primary w-100">
           </div>
         </div>
-        <div class="col mt-1 mt-md-0">
-          <input type="text" class="form-control" placeholder="value">
-        </div>
-        <div class="w-100 d-block d-md-none"></div>
-        <div class="col-auto mt-1 mt-md-0 d-flex">
-          <div class="my-auto ml-3 mr-1 mx-md-1">in</div>
-        </div>
-        <div class="col-auto mt-1 mt-md-0">
-          <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            {{ search.collections | first }}
-          </button>
-          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            {% for coll in search.collections %}
-            <button class="dropdown-item">{{ coll }}</button>
-            {% endfor %}
-          </div>
-        </div>
-        <div class="col col-md-auto mt-1 mt-md-0">
-          <button type="button" class="btn btn-primary w-100">Search</button>
-        </div>
-      </div>
+      </form>
       {# Search results #}
       <div class="row mt-3 d-none">
         <div class="col">
