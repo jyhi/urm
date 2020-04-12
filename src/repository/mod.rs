@@ -12,10 +12,10 @@ use crate::config::UrmConfig;
 pub use structure::Repository;
 
 #[get("/repository/<ln_p>", format = "json")]
-pub fn api(db: UrmDb, ln_p: String)
+pub fn api(config: State<UrmConfig>, db: UrmDb, ln_p: String)
   -> Result<Option<Json<mongodb::Document>>, Json<mongodb::error::Error>>
 {
-  match api::from_db(&db, ln_p) {
+  match api::from_db(&db, &config, ln_p) {
     Ok(r) => match r {
       Some(doc) => Ok(Some(Json(doc))),
       None => Ok(None)

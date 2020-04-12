@@ -21,7 +21,7 @@ impl<'a> Context<'a> {
   pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig, page: u64, nitem: u64)
     -> Result<Self, mongodb::error::Error>
   {
-    let nprod = db.collection("products").count(None, None)? as u64;
+    let nprod = db.collection(&config.collection.products).count(None, None)? as u64;
     let nskip = (page - 1) * nitem;
     let page_info = PageInfo {
       current: page,
@@ -29,7 +29,8 @@ impl<'a> Context<'a> {
       max: nprod / (nitem + 1) + 1
     };
 
-    let mut repositories: Vec<Repository> = db.collection("repositories")
+    let mut repositories: Vec<Repository> = db
+      .collection(&config.collection.repositories)
       .find(None, None)?
       .skip(nskip as usize)
       .take(nitem as usize)
@@ -38,7 +39,7 @@ impl<'a> Context<'a> {
       .collect();
 
     for mut r in &mut repositories {
-      r.load = db.collection("products")
+      r.load = db.collection(&config.collection.products)
         .count(Some(doc!{ "in": &r.ln_p }), None)? as u64;
     }
 

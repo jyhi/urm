@@ -17,7 +17,7 @@ impl<'a> Context<'a> {
   pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig, page: u64, nitem: u64)
     -> Result<Self, mongodb::error::Error>
   {
-    let nprod = db.collection("products").count(None, None)? as u64;
+    let nprod = db.collection(&config.collection.products).count(None, None)? as u64;
     let nskip = (page - 1) * nitem;
     let page_info = PageInfo {
       current: page,
@@ -25,7 +25,7 @@ impl<'a> Context<'a> {
       max: nprod / (nitem + 1) + 1
     };
 
-    let products = db.collection("products")
+    let products = db.collection(&config.collection.products)
       .find(None, None)?
       .skip(nskip as usize)
       .take(nitem as usize)

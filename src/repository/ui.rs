@@ -22,7 +22,7 @@ impl<'a> Context<'a> {
   pub fn from_db(db: &UrmDb, config: &'a UrmConfig, ln_p: String, page: u64, nitem: u64)
     -> Result<Option<Self>, mongodb::error::Error>
   {
-    let nprod = db.collection("products").count(None, None)? as u64;
+    let nprod = db.collection(&config.collection.products).count(None, None)? as u64;
     let nskip = (page - 1) * nitem;
     let page_info = PageInfo {
       current: page,
@@ -30,7 +30,7 @@ impl<'a> Context<'a> {
       max: nprod / (nitem + 1) + 1
     };
 
-    let mut ctx = match db.collection("repositories")
+    let mut ctx = match db.collection(&config.collection.repositories)
       .find_one(Some(doc!{ "ln_p": ln_p }), None)?
     {
       Some(doc) => Some(Context {
@@ -43,11 +43,11 @@ impl<'a> Context<'a> {
 
     if let Some(ref mut ctx) = ctx {
       // Override Repository::load with the real number
-      ctx.repository.load = db.collection("products")
+      ctx.repository.load = db.collection(&config.collection.products)
         .count(Some(doc!{ "in": &ctx.repository.ln_p }), None)? as u64;
 
       // Override Repository::has with the real list
-      ctx.repository.has = db.collection("products")
+      ctx.repository.has = db.collection(&config.collection.products)
         .find(Some(doc!{ "in": &ctx.repository.ln_p }), None)?
         .skip(nskip as usize)
         .take(nitem as usize)

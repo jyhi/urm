@@ -19,7 +19,7 @@ impl<'a> Context<'a> {
   pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig, pn: String)
     -> Result<Option<Self>, mongodb::error::Error>
   {
-    match db.collection(config.collection.products.as_str())
+    match db.collection(&config.collection.products)
       .find_one(Some(doc!{ "pn": pn }), None)?
     {
       Some(doc) => Ok(Some(Context {

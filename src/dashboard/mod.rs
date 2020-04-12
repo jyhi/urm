@@ -8,13 +8,13 @@ use crate::database::UrmDb;
 use crate::config::UrmConfig;
 
 #[get("/dashboard", format = "json")]
-pub fn api(db: UrmDb) -> JsonValue {
-  let ctx = api::Context::from_db(&db);
+pub fn api(config: State<UrmConfig>, db: UrmDb) -> JsonValue {
+  let ctx = api::Context::from_db(&db, &config);
   json!(ctx)
 }
 
 #[get("/dashboard", format = "html", rank = 1)]
 pub fn ui(config: State<UrmConfig>, db: UrmDb) -> Template {
-  let ctx = ui::Context::from_db(&config, &db);
+  let ctx = ui::Context::from_db(&db, &config);
   Template::render("dashboard", ctx)
 }

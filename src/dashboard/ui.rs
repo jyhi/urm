@@ -10,10 +10,10 @@ pub struct Context<'a> {
 }
 
 impl<'a> Context<'a> {
-  pub fn from_db(config: &'a UrmConfig, db: &'a UrmDb) -> Self {
+  pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig) -> Self {
     // TODO: Error handling
     // XXX: Why count returns Result<i64>?
-    let nprod = db.collection("products")
+    let nprod = db.collection(&config.collection.products)
       .count(None, None)
       .unwrap() as u64;
 

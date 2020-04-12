@@ -9,13 +9,13 @@ use crate::database::UrmDb;
 use crate::config::UrmConfig;
 
 #[get("/repositories?<page>&<nitem>", format = "json")]
-pub fn api(db: UrmDb, page: Option<u64>, nitem: Option<u64>)
+pub fn api(config: State<UrmConfig>, db: UrmDb, page: Option<u64>, nitem: Option<u64>)
   -> Result<Json<Vec<mongodb::Document>>, Json<mongodb::error::Error>>
 {
   let page = page.unwrap_or(1);
   let nitem = nitem.unwrap_or(10);
 
-  match api::from_db(&db, page, nitem) {
+  match api::from_db(&db, &config, page, nitem) {
     Ok(r) => Ok(Json(r)),
     Err(e) => Err(Json(e))
   }

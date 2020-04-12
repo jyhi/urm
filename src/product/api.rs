@@ -10,7 +10,7 @@ use crate::config::UrmConfig;
 pub fn from_db(db: &UrmDb, config: &UrmConfig, pn: String)
   -> Result<Option<mongodb::Document>, mongodb::error::Error>
 {
-  match db.collection(config.collection.products.as_str())
+  match db.collection(&config.collection.products)
     .find_one(Some(doc!{ "pn": pn }), None)?
   {
     Some(doc) => Ok(Some(doc)),
