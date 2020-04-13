@@ -13,7 +13,7 @@ pub use structure::Repository;
 
 #[get("/repository/<ln_p>", format = "json")]
 pub fn api(config: State<UrmConfig>, db: UrmDb, ln_p: String)
-  -> Result<Option<Json<mongodb::Document>>, Json<mongodb::error::Error>>
+  -> Result<Option<Json<mongodb::Document>>, Json<mongodb::Error>>
 {
   match api::from_db(&db, &config, ln_p) {
     Ok(r) => match r {
@@ -26,7 +26,7 @@ pub fn api(config: State<UrmConfig>, db: UrmDb, ln_p: String)
 
 #[get("/repository/<ln_p>", format = "html", rank = 1)]
 pub fn ui(config: State<UrmConfig>, db: UrmDb, ln_p: String)
-  -> Result<Option<Template>, mongodb::error::Error>
+  -> Result<Option<Template>, mongodb::Error>
 {
   match ui::Context::from_db(&db, &config, ln_p) {
     Ok(r) => match r {

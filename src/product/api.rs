@@ -8,7 +8,7 @@ use crate::database::UrmDb;
 use crate::config::UrmConfig;
 
 pub fn from_db(db: &UrmDb, config: &UrmConfig, pn: String)
-  -> Result<Option<mongodb::Document>, mongodb::error::Error>
+  -> Result<Option<mongodb::Document>, mongodb::Error>
 {
   match db.collection(&config.collection.products)
     .find_one(Some(doc!{ "pn": pn }), None)?

@@ -54,7 +54,7 @@ pub struct Context<'a> {
 
 impl<'a> Context<'a> {
   pub fn from_db(db: &UrmDb, config: &'a UrmConfig, k: &String, _op: &String, v: &String, coll: &String, page: u64, nitem: u64)
-    -> Result<Self, mongodb::error::Error>
+    -> Result<Self, mongodb::Error>
   {
     let nresult = db.collection(coll)
       .count(Some(doc!{ k: RegExp(v.clone(), "i".to_string() )}), None)? as u64;

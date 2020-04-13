@@ -17,7 +17,7 @@ pub struct Context<'a> {
 
 impl<'a> Context<'a> {
   pub fn from_db(db: &UrmDb, config: &'a UrmConfig, ln_p: String)
-    -> Result<Option<Self>, mongodb::error::Error>
+    -> Result<Option<Self>, mongodb::Error>
   {
     let mut ctx = match db.collection(&config.collection.repositories)
       .find_one(Some(doc!{ "ln_p": ln_p }), None)?

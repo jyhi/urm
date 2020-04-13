@@ -11,7 +11,7 @@ pub struct Context {
 
 impl Context {
   pub fn from_db(db: &UrmDb, config: &UrmConfig)
-    -> Result<Self, mongodb::error::Error>
+    -> Result<Self, mongodb::Error>
   {
     let nprod = db.collection(&config.collection.products)
       .count(None, None)? as u64;

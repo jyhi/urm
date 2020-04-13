@@ -14,7 +14,7 @@ pub struct Context<'a> {
 
 impl<'a> Context<'a> {
   pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig)
-    -> Result<Self, mongodb::error::Error>
+    -> Result<Self, mongodb::Error>
   {
     let ops = ["matches"].iter()
       .map(|op| op.to_string())

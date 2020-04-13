@@ -17,7 +17,7 @@ pub struct Context<'a> {
 
 impl<'a> Context<'a> {
   pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig, pn: String)
-    -> Result<Option<Self>, mongodb::error::Error>
+    -> Result<Option<Self>, mongodb::Error>
   {
     match db.collection(&config.collection.products)
       .find_one(Some(doc!{ "pn": pn }), None)?

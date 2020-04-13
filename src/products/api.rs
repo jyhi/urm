@@ -4,7 +4,7 @@ use crate::database::UrmDb;
 use crate::config::UrmConfig;
 
 pub fn from_db(db: &UrmDb, config: &UrmConfig, page: u64, nitem: u64)
-  -> Result<Vec<mongodb::Document>, mongodb::error::Error>
+  -> Result<Vec<mongodb::Document>, mongodb::Error>
 {
   let nskip = (page - 1) * nitem;
 

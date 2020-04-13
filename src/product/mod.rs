@@ -13,7 +13,7 @@ pub use structure::Product;
 
 #[get("/product/<pn>", format = "json")]
 pub fn api(config: State<UrmConfig>, db: UrmDb, pn: String)
-  -> Result<Option<Json<mongodb::Document>>, Json<mongodb::error::Error>>
+  -> Result<Option<Json<mongodb::Document>>, Json<mongodb::Error>>
 {
   match api::from_db(&db, &config, pn) {
     Ok(r) => match r {
@@ -26,7 +26,7 @@ pub fn api(config: State<UrmConfig>, db: UrmDb, pn: String)
 
 #[get("/product/<pn>", format = "html", rank = 1)]
 pub fn ui(config: State<UrmConfig>, db: UrmDb, pn: String)
-  -> Result<Option<Template>, mongodb::error::Error>
+  -> Result<Option<Template>, mongodb::Error>
 {
   match ui::Context::from_db(&db, &config, pn) {
     Ok(r) => match r {

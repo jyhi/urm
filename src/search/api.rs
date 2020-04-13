@@ -8,7 +8,7 @@ use rocket_contrib::databases::mongodb::{
 use crate::database::UrmDb;
 
 pub fn from_db(db: &UrmDb, k: &String, _op: &String, v: &String, coll: &String, page: u64, nitem: u64)
-  -> Result<Vec<mongodb::Document>, mongodb::error::Error>
+  -> Result<Vec<mongodb::Document>, mongodb::Error>
 {
   let nskip = (page - 1) * nitem;
 
