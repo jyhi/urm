@@ -6,15 +6,16 @@ use rocket_contrib::databases::mongodb::{
   db::ThreadedDatabase,
 };
 use crate::database::UrmDb;
+use super::SearchQuery;
 
-pub fn from_db(db: &UrmDb, k: &String, _op: &String, v: &String, coll: &String, page: u64, nitem: u64)
+pub fn from_db(db: &UrmDb, query: &SearchQuery, page: u64, nitem: u64)
   -> Result<Vec<mongodb::Document>, mongodb::Error>
 {
   let nskip = (page - 1) * nitem;
 
   Ok(
-    db.collection(coll)
-      .find(Some(doc!{ k: RegExp(v.clone(), "i".to_string() )}), None)?
+    db.collection(&query.coll)
+      .find(Some(doc!{ &query.k: RegExp(query.v.clone(), "i".to_string() )}), None)?
       .skip(nskip as usize)
       .take(nitem as usize)
       .filter_map(|p| p.ok()) // XXX: TODO: Error handling

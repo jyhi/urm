@@ -9,6 +9,7 @@ use rocket_contrib::databases::mongodb::{
 use crate::database::UrmDb;
 use crate::context::PageInfo;
 use crate::config::UrmConfig;
+use super::SearchQuery;
 
 #[derive(Default, Serialize)]
 pub struct SearchResult {
@@ -53,11 +54,11 @@ pub struct Context<'a> {
 }
 
 impl<'a> Context<'a> {
-  pub fn from_db(db: &UrmDb, config: &'a UrmConfig, k: &String, _op: &String, v: &String, coll: &String, page: u64, nitem: u64)
+  pub fn from_db(db: &UrmDb, config: &'a UrmConfig, query: &SearchQuery, page: u64, nitem: u64)
     -> Result<Self, mongodb::Error>
   {
-    let nresult = db.collection(coll)
-      .count(Some(doc!{ k: RegExp(v.clone(), "i".to_string() )}), None)? as u64;
+    let nresult = db.collection(&query.coll)
+      .count(Some(doc!{ &query.k: RegExp(query.v.clone(), "i".to_string() )}), None)? as u64;
     let nskip = (page - 1) * nitem;
     let page_info = PageInfo {
       current: page,
@@ -65,21 +66,21 @@ impl<'a> Context<'a> {
       max: nresult / (nitem + 1) + 1
     };
 
-    let base_path = if coll == &config.collection.products {
+    let base_path = if &query.coll == &config.collection.products {
       "/product".to_string()
-    } else if coll == &config.collection.repositories {
+    } else if &query.coll == &config.collection.repositories {
       "/repository".to_string()
     } else {
       "".to_string() // Don't care
     };
 
-    let results = db.collection(coll)
-      .find(Some(doc!{ k: RegExp(v.clone(), "i".to_string() )}), None)?
+    let results = db.collection(&query.coll)
+      .find(Some(doc!{ &query.k: RegExp(query.v.clone(), "i".to_string() )}), None)?
       .skip(nskip as usize)
       .take(nitem as usize)
       .filter_map(|rdoc| rdoc.ok()) // XXX: TODO: Error handling
       .map(|rdoc| {
-        let value = rdoc.get(k).unwrap().to_string();
+        let value = rdoc.get(&query.k).unwrap().to_string();
         let mut r = SearchResult::from(rdoc);
         r.value = value;
         r
@@ -87,7 +88,7 @@ impl<'a> Context<'a> {
       .collect();
 
     let search_info = SearchInfo {
-      key: k.clone(),
+      key: query.k.clone(),
       base_path: base_path,
       results: results,
     };
