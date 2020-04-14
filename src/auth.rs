@@ -82,7 +82,6 @@ impl<'a, 'r> FromRequest<'a, 'r> for UrmAuth {
 }
 
 pub fn check_db(db: &UrmDb, config: &UrmConfig, cred: &UrmAuth) -> Result<Option<()>, mongodb::Error> {
-  eprintln!("{:?}", pbkdf2::pbkdf2_simple(&cred.password, config.crypto.pbkdf2.iterations));
   match db.collection(&config.collection.users)
     .find_one(Some(doc!{ "username": &cred.username }), None)?
   {
