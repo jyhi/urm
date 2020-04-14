@@ -19,7 +19,10 @@ impl<'a> Context<'a> {
     let ops = ["matches"].iter()
       .map(|op| op.to_string())
       .collect();
-    let collections = db.collection_names(None)?;
+    let collections = vec![
+      config.collection.products.clone(),
+      config.collection.repositories.clone()
+    ];
 
     let search_info = SearchInfo {
       ops: ops,
