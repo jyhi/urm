@@ -89,6 +89,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "base64"
+version = "0.12.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7d5ca2cd0adc3f48f9e9ea5a6bbdf9ccc0bfade884847e484d452414c7ccffb3"
+
+[[package]]
 name = "bitflags"
 version = "1.2.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -227,6 +233,16 @@ checksum = "7afa06d05a046c7a47c3a849907ec303504608c927f4e85f7bfff22b7180d971"
 dependencies = [
  "constant_time_eq",
  "generic-array 0.9.0",
+]
+
+[[package]]
+name = "crypto-mac"
+version = "0.7.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "4434400df11d95d556bac068ddfedd482915eb18fe8bea89bc80b6e4b1c179e5"
+dependencies = [
+ "generic-array 0.12.3",
+ "subtle",
 ]
 
 [[package]]
@@ -426,8 +442,18 @@ version = "0.6.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "733e1b3ac906631ca01ebb577e9bb0f5e37a454032b9036b5eaea4013ed6f99a"
 dependencies = [
- "crypto-mac",
+ "crypto-mac 0.6.2",
  "digest 0.7.6",
+]
+
+[[package]]
+name = "hmac"
+version = "0.7.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "5dcb5e64cda4c23119ab41ba960d1e170a774c8e4b9d9e6a9bc18aabf5e59695"
+dependencies = [
+ "crypto-mac 0.7.0",
+ "digest 0.8.1",
 ]
 
 [[package]]
@@ -693,10 +719,10 @@ dependencies = [
  "chrono",
  "data-encoding",
  "hex",
- "hmac",
+ "hmac 0.6.3",
  "md-5",
  "openssl",
- "pbkdf2",
+ "pbkdf2 0.2.3",
  "rand 0.3.23",
  "scan_fmt",
  "semver",
@@ -830,11 +856,26 @@ dependencies = [
  "base64 0.9.3",
  "byteorder",
  "constant_time_eq",
- "crypto-mac",
+ "crypto-mac 0.6.2",
  "generic-array 0.9.0",
- "hmac",
+ "hmac 0.6.3",
  "rand 0.5.6",
- "sha2",
+ "sha2 0.7.1",
+]
+
+[[package]]
+name = "pbkdf2"
+version = "0.3.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "006c038a43a45995a9670da19e67600114740e8511d4333bf97a56e66a7542d9"
+dependencies = [
+ "base64 0.9.3",
+ "byteorder",
+ "crypto-mac 0.7.0",
+ "hmac 0.7.1",
+ "rand 0.5.6",
+ "sha2 0.8.1",
+ "subtle",
 ]
 
 [[package]]
@@ -1407,6 +1448,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "sha2"
+version = "0.8.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "27044adfd2e1f077f649f59deb9490d3941d674002f7d062870a60ebe9bd47a0"
+dependencies = [
+ "block-buffer 0.7.3",
+ "digest 0.8.1",
+ "fake-simd",
+ "opaque-debug",
+]
+
+[[package]]
 name = "slab"
 version = "0.4.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -1432,6 +1485,12 @@ name = "state"
 version = "0.4.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7345c971d1ef21ffdbd103a75990a15eb03604fc8b8852ca8cb418ee1a099028"
+
+[[package]]
+name = "subtle"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2d67a5a62ba6e01cb2192ff309324cb4875d0c451d55fe2319433abe7a05a8ee"
 
 [[package]]
 name = "syn"
@@ -1683,6 +1742,8 @@ dependencies = [
 name = "urm"
 version = "0.1.0"
 dependencies = [
+ "base64 0.12.0",
+ "pbkdf2 0.3.0",
  "rocket",
  "rocket_contrib",
  "serde",

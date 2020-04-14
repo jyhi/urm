@@ -21,3 +21,10 @@
 
 # Name of the MongoDB collection storing repository data
 # repositories = "repositories"
+
+# Name of the MongoDB collection storing user data
+# users = "users"
+
+[urm.crypto.pbkdf2]
+# The iteration count for the PBKDF2 password hashing algorithm
+# iterations = 10000

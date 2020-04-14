@@ -3,6 +3,8 @@
 #[macro_use] extern crate rocket;
 #[macro_use] extern crate rocket_contrib;
 extern crate serde;
+extern crate base64;
+extern crate pbkdf2;
 extern crate toml;
 
 mod config;
@@ -15,6 +17,7 @@ mod repository;
 mod products;
 mod product;
 mod search;
+mod auth;
 
 use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
@@ -46,6 +49,7 @@ fn main() {
       ]
     )
     .mount(&urm_config.mount_point, StaticFiles::from("static"))
+    .register(catchers![auth::unauthorized])
     .attach(SpaceHelmet::default())
     .attach(Template::fairing())
     .attach(UrmDb::fairing())
