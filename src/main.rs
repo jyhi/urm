@@ -4,7 +4,7 @@
 #[macro_use] extern crate rocket_contrib;
 extern crate serde;
 extern crate base64;
-extern crate pbkdf2;
+extern crate argon2;
 extern crate toml;
 
 mod config;

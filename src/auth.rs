@@ -87,12 +87,20 @@ pub fn check_db(db: &UrmDb, config: &UrmConfig, cred: &UrmAuth) -> Result<Option
   {
     Some(doc_user) => {
       if let Ok(pass) = doc_user.get_str("password") {
-        if let Ok(_) = pbkdf2::pbkdf2_check(&cred.password, pass) {
-          // Both username and password match
-          Ok(Some(()))
-        } else {
-          // Username matches but password does not match
-          Ok(None)
+        match argon2::verify_encoded(pass, cred.password.as_bytes()) {
+          Ok(valid) => {
+            if valid {
+              // Both username and password match
+              Ok(Some(()))
+            } else {
+              // Username matches but password does not match
+              Ok(None)
+            }
+          }
+          Err(_) => {
+            // argon2 throws an error
+            Ok(None)
+          }
         }
       } else {
         // ValueAccessError; the stored data may not be a string
