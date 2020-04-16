@@ -47,11 +47,6 @@ impl Default for Pbkdf2 {
   }
 }
 
-#[derive(Default, Serialize)]
-pub struct Crypto {
-  pub pbkdf2: Pbkdf2,
-}
-
 #[derive(Serialize)]
 pub struct UrmConfig {
   pub brand: String,
@@ -60,7 +55,6 @@ pub struct UrmConfig {
   pub mount_point: String,
   pub r#static: Static,
   pub collection: Collection,
-  pub crypto: Crypto,
 }
 
 impl From<UrmConfigFile> for UrmConfig {
@@ -88,19 +82,6 @@ impl From<UrmConfigFile> for UrmConfig {
       } else {
         Default::default()
       },
-      crypto: if let Some(crypto) = file.urm.crypto {
-        Crypto {
-          pbkdf2: if let Some(pbkdf2) = crypto.pbkdf2 {
-            Pbkdf2 {
-              iterations: pbkdf2.iterations.unwrap_or(10000),
-            }
-          } else {
-            Default::default()
-          }
-        }
-      } else {
-        Default::default()
-      }
     }
   }
 }
@@ -120,16 +101,6 @@ struct CollectionFile {
 }
 
 #[derive(Default, Deserialize)]
-struct Pbkdf2File {
-  iterations: Option<u32>,
-}
-
-#[derive(Default, Deserialize)]
-struct CryptoFile {
-  pbkdf2: Option<Pbkdf2File>,
-}
-
-#[derive(Default, Deserialize)]
 struct UrmFile {
   brand: Option<String>,
   product_name: Option<String>,
@@ -137,7 +108,6 @@ struct UrmFile {
   mount_point: Option<String>,
   r#static: Option<StaticFile>,
   collection: Option<CollectionFile>,
-  crypto: Option<CryptoFile>,
 }
 
 #[derive(Default, Deserialize)]

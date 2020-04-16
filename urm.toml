@@ -32,7 +32,3 @@
 bootstrap_css = "/css/bootstrap.min.css"
 bootstrap_bundle_js = "/js/bootstrap.bundle.js"
 jquery_js = "/js/jquery.min.js"
-
-[urm.crypto.pbkdf2]
-# The iteration count for the PBKDF2 password hashing algorithm
-# iterations = 10000
