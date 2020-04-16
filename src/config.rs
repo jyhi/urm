@@ -1,6 +1,23 @@
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize)]
+pub struct Static {
+  pub bootstrap_css: String,
+  pub bootstrap_bundle_js: String,
+  pub jquery_js: String,
+}
+
+impl Default for Static {
+  fn default() -> Self {
+    Static {
+      bootstrap_css: "/css/bootstrap.min.css".to_string(),
+      bootstrap_bundle_js: "/js/bootstrap.bundle.js".to_string(),
+      jquery_js: "/js/jquery.min.js".to_string(),
+    }
+  }
+}
+
+#[derive(Serialize)]
 pub struct Collection {
   pub products: String,
   pub repositories: String,
@@ -41,6 +58,7 @@ pub struct UrmConfig {
   pub product_name: String,
   pub version: String,
   pub mount_point: String,
+  pub r#static: Static,
   pub collection: Collection,
   pub crypto: Crypto,
 }
@@ -52,6 +70,15 @@ impl From<UrmConfigFile> for UrmConfig {
       product_name: file.urm.product_name.unwrap_or(env!("CARGO_PKG_NAME").to_string()),
       version: file.urm.version.unwrap_or(env!("CARGO_PKG_VERSION").to_string()),
       mount_point: file.urm.mount_point.unwrap_or("/".to_string()),
+      r#static: if let Some(s) = file.urm.r#static {
+        Static {
+          bootstrap_css: s.bootstrap_css.unwrap_or("/css/bootstrap.min.css".to_string()),
+          bootstrap_bundle_js: s.bootstrap_bundle_js.unwrap_or("/js/bootstrap.bundle.js".to_string()),
+          jquery_js: s.jquery_js.unwrap_or("/js/jquery.min.js".to_string()),
+        }
+      } else {
+        Static::default()
+      },
       collection: if let Some(coll) = file.urm.collection {
         Collection {
           products: coll.products.unwrap_or("products".to_string()),
@@ -79,6 +106,13 @@ impl From<UrmConfigFile> for UrmConfig {
 }
 
 #[derive(Default, Deserialize)]
+struct StaticFile {
+  bootstrap_css: Option<String>,
+  bootstrap_bundle_js: Option<String>,
+  jquery_js: Option<String>,
+}
+
+#[derive(Default, Deserialize)]
 struct CollectionFile {
   products: Option<String>,
   repositories: Option<String>,
@@ -101,6 +135,7 @@ struct UrmFile {
   product_name: Option<String>,
   version: Option<String>,
   mount_point: Option<String>,
+  r#static: Option<StaticFile>,
   collection: Option<CollectionFile>,
   crypto: Option<CryptoFile>,
 }
