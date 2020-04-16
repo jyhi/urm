@@ -11,7 +11,7 @@ impl Default for Static {
   fn default() -> Self {
     Static {
       bootstrap_css: "/css/bootstrap.min.css".to_string(),
-      bootstrap_bundle_js: "/js/bootstrap.bundle.js".to_string(),
+      bootstrap_bundle_js: "/js/bootstrap.bundle.min.js".to_string(),
       jquery_js: "/js/jquery.min.js".to_string(),
     }
   }
@@ -67,7 +67,7 @@ impl From<UrmConfigFile> for UrmConfig {
       r#static: if let Some(s) = file.urm.r#static {
         Static {
           bootstrap_css: s.bootstrap_css.unwrap_or("/css/bootstrap.min.css".to_string()),
-          bootstrap_bundle_js: s.bootstrap_bundle_js.unwrap_or("/js/bootstrap.bundle.js".to_string()),
+          bootstrap_bundle_js: s.bootstrap_bundle_js.unwrap_or("/js/bootstrap.bundle.min.js".to_string()),
           jquery_js: s.jquery_js.unwrap_or("/js/jquery.min.js".to_string()),
         }
       } else {

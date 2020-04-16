@@ -30,5 +30,5 @@
 # server (by writing an absolute path). The defaults are local serving.
 [urm.static]
 # bootstrap_css = "/css/bootstrap.min.css"
-# bootstrap_bundle_js = "/js/bootstrap.bundle.js"
+# bootstrap_bundle_js = "/js/bootstrap.bundle.min.js"
 # jquery_js = "/js/jquery.min.js"
