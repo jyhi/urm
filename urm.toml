@@ -29,6 +29,6 @@
 # They can be configured to CDNs (by writing URLs), or can be served by this
 # server (by writing an absolute path). The defaults are local serving.
 [urm.static]
-bootstrap_css = "/css/bootstrap.min.css"
-bootstrap_bundle_js = "/js/bootstrap.bundle.js"
-jquery_js = "/js/jquery.min.js"
+# bootstrap_css = "/css/bootstrap.min.css"
+# bootstrap_bundle_js = "/js/bootstrap.bundle.js"
+# jquery_js = "/js/jquery.min.js"
