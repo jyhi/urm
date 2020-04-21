@@ -27,9 +27,7 @@
         {# Title #}
         <div class="col d-flex align-items-start flex-column">
           <span class="text-secondary">L/N-P: {{ repository.ln_p }}</span>
-          <h1 class="display-3">
-            <span lang="en">{{ repository.name }}</span>
-          </h1>
+          <h1 class="display-3">{{ repository.name }}</h1>
           {# Tags #}
           {{ tags::put(tags=repository.tags) }}
         </div>

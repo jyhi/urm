@@ -32,9 +32,7 @@
           </div>
           <div class="row">
             <div class="col">
-              <h1 class="display-3">
-                <span lang="en">{{ product.name }}</span>
-              </h1>
+              <h1 class="display-3">{{ product.name }}</h1>
             </div>
           </div>
           {# Tags #}
