@@ -14,6 +14,7 @@ use crate::config::UrmConfig;
 pub struct Context<'a> {
   pub urm: &'a UrmConfig,
   pub page: PageInfo,
+  pub nrepo: u64,
   pub repositories: Vec<Repository>,
 }
 
@@ -21,12 +22,12 @@ impl<'a> Context<'a> {
   pub fn from_db(db: &'a UrmDb, config: &'a UrmConfig, page: u64, nitem: u64)
     -> Result<Self, mongodb::Error>
   {
-    let nprod = db.collection(&config.collection.products).count(None, None)? as u64;
+    let nrepo = db.collection(&config.collection.repositories).count(None, None)? as u64;
     let nskip = (page - 1) * nitem;
     let page_info = PageInfo {
       current: page,
       min: 1,
-      max: (nprod - 1) / nitem + 1
+      max: (nrepo - 1) / nitem + 1
     };
 
     let mut repositories: Vec<Repository> = db
@@ -46,6 +47,7 @@ impl<'a> Context<'a> {
     Ok(Context {
       urm: &config,
       page: page_info,
+      nrepo: nrepo,
       repositories: repositories,
     })
   }

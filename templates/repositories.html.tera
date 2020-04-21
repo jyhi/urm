@@ -28,7 +28,7 @@
             List of Repositories
           </h1>
           <h2 class="text-secondary">
-            Total number of repositories: {{ repositories | length }}
+            Total number of repositories: {{ nrepo }}
           </h2>
         </div>
       </div>

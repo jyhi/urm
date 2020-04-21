@@ -10,6 +10,7 @@ use crate::config::UrmConfig;
 pub struct Context<'a> {
   pub urm: &'a UrmConfig,
   pub page: PageInfo,
+  pub nprod: u64,
   pub products: Vec<Product>,
 }
 
@@ -36,6 +37,7 @@ impl<'a> Context<'a> {
     Ok(Context {
       urm: &config,
       page: page_info,
+      nprod: nprod,
       products: products,
     })
   }
