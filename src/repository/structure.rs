@@ -37,9 +37,8 @@ impl From<mongodb::Document> for Repository {
         "name" => {
           r.name = f.1.as_str().unwrap_or("Unknown").to_string();
         }
-        "load" => {
-          r.load = f.1.as_i64().unwrap_or(0) as u64;
-        }
+        // Note: Repository::load is not supposed to be filled here.
+        "load" => {}
         // Note: Repository::has is not supposed to be filled here, but we also
         // need to ensure that if it is accidently added into the database it's
         // not treated as an attribute.
