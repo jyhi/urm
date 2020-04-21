@@ -38,6 +38,17 @@ pub fn update_db(db: &UrmDb, config: &UrmConfig, ln_p: &str, field: mongodb::Doc
   }
 }
 
+pub fn replace_to_db(db: &UrmDb, config: &UrmConfig, ln_p: &str, doc: mongodb::Document)
+  -> Result<(), mongodb::Error>
+{
+  match db.collection(&config.collection.repositories)
+    .replace_one(doc!{ "ln_p": ln_p }, doc, None)
+  {
+    Ok(_) => Ok(()),
+    Err(e) => Err(e)
+  }
+}
+
 pub fn delete_from_db(db: &UrmDb, config: &UrmConfig, ln_p: &str)
   -> Result<(), mongodb::Error>
 {

@@ -77,6 +77,36 @@ pub fn api_create(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, repository
   }
 }
 
+pub struct PutRepository(pub String);
+
+impl FromDataSimple for PutRepository {
+  type Error = std::io::Error;
+
+  fn from_data(_: &Request, data: Data) -> Outcome<Self, Self::Error> {
+    let mut req_body_str = String::new();
+    if let Err(e) = data.open().take(4096).read_to_string(&mut req_body_str) {
+      return Outcome::Failure((Status::InternalServerError, e))
+    }
+
+    Outcome::Success(PutRepository(req_body_str))
+  }
+}
+
+#[put("/repository/<ln_p>", format = "json", data = "<repository>")]
+pub fn api_replace(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, ln_p: String, repository: PutRepository)
+  -> Result<Status, mongodb::Error>
+{
+  match auth::check_db(&db, &config, &cred)? {
+    Some(_) => {
+      api::replace_to_db(&db, &config, &ln_p, serde_json::from_str(&repository.0).unwrap())?;
+      Ok(Status::NoContent)
+    }
+    None => {
+      Ok(Status::Unauthorized)
+    }
+  }
+}
+
 #[delete("/repository/<ln_p>")]
 pub fn api_remove(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, ln_p: String)
   -> Result<Status, mongodb::Error>
