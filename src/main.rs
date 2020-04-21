@@ -42,6 +42,7 @@ fn main() {
         repository::ui,
         repository::api,
         repository::api_create,
+        repository::api_set_field,
         products::ui,
         products::api,
         product::ui,

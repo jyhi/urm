@@ -26,3 +26,14 @@ pub fn to_db(db: &UrmDb, config: &UrmConfig, doc: mongodb::Document)
     Err(e) => Err(e)
   }
 }
+
+pub fn update_db(db: &UrmDb, config: &UrmConfig, ln_p: &str, field: mongodb::Document)
+  -> Result<(), mongodb::Error>
+{
+  match db.collection(&config.collection.repositories)
+    .update_one(doc!{ "ln_p": ln_p }, doc!{ "$set": field }, None)
+  {
+    Ok(_) => Ok(()),
+    Err(e) => Err(e)
+  }
+}

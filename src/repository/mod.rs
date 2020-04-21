@@ -32,6 +32,36 @@ impl FromDataSimple for PostedRepository {
   }
 }
 
+pub struct PatchedField(pub String);
+
+impl FromDataSimple for PatchedField {
+  type Error = std::io::Error;
+
+  fn from_data(_: &Request, data: Data) -> Outcome<Self, Self::Error> {
+    let mut req_body_str = String::new();
+    if let Err(e) = data.open().take(4096).read_to_string(&mut req_body_str) {
+      return Outcome::Failure((Status::InternalServerError, e))
+    }
+
+    Outcome::Success(PatchedField(req_body_str))
+  }
+}
+
+#[patch("/repository/<ln_p>", format = "json", data = "<field>")]
+pub fn api_set_field(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, ln_p: String, field: PatchedField)
+  -> Result<Status, mongodb::Error>
+{
+  match auth::check_db(&db, &config, &cred)? {
+    Some(_) => {
+      api::update_db(&db, &config, &ln_p, serde_json::from_str(&field.0).unwrap())?;
+      Ok(Status::NoContent)
+    }
+    None => {
+      Ok(Status::Unauthorized)
+    }
+  }
+}
+
 #[post("/repository", format = "json", data = "<repository>")]
 pub fn api_create(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, repository: PostedRepository)
   -> Result<Status, mongodb::Error>
