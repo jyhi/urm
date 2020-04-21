@@ -77,6 +77,21 @@ pub fn api_create(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, repository
   }
 }
 
+#[delete("/repository/<ln_p>")]
+pub fn api_remove(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, ln_p: String)
+  -> Result<Status, mongodb::Error>
+{
+  match auth::check_db(&db, &config, &cred)? {
+    Some(_) => {
+      api::delete_from_db(&db, &config, &ln_p)?;
+      Ok(Status::NoContent)
+    }
+    None => {
+      Ok(Status::Unauthorized)
+    }
+  }
+}
+
 #[get("/repository/<ln_p>", format = "json")]
 pub fn api(config: State<UrmConfig>, db: UrmDb, ln_p: String)
   -> Result<Option<Json<mongodb::Document>>, Json<mongodb::Error>>
