@@ -1,5 +1,5 @@
-use rocket_contrib::databases::mongodb;
 use rocket_contrib::databases::mongodb::{
+  self,
   bson,
   doc,
   db::ThreadedDatabase,

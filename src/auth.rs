@@ -3,8 +3,8 @@ use rocket::Outcome;
 use rocket::http::Status;
 use rocket::request::{self, Request, FromRequest};
 use rocket::response::Response;
-use rocket_contrib::databases::mongodb;
 use rocket_contrib::databases::mongodb::{
+  self,
   bson,
   doc,
   db::ThreadedDatabase,
