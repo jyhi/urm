@@ -26,7 +26,7 @@ impl<'a> Context<'a> {
     let page_info = PageInfo {
       current: page,
       min: 1,
-      max: nprod / (nitem + 1) + 1
+      max: (nprod - 1) / nitem + 1
     };
 
     let mut repositories: Vec<Repository> = db

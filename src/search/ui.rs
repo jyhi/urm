@@ -63,7 +63,7 @@ impl<'a> Context<'a> {
     let page_info = PageInfo {
       current: page,
       min: 1,
-      max: nresult / (nitem + 1) + 1
+      max: (nresult - 1) / nitem + 1
     };
 
     let base_path = if &query.coll == &config.collection.products {
