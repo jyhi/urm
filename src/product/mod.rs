@@ -77,6 +77,21 @@ pub fn api_set_field(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, pn: Str
   }
 }
 
+#[delete("/product/<pn>")]
+pub fn api_remove(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, pn: String)
+  -> Result<Status, mongodb::Error>
+{
+  match auth::check_db(&db, &config, &cred)? {
+    Some(_) => {
+      api::delete_from_db(&db, &config, &pn)?;
+      Ok(Status::NoContent)
+    }
+    None => {
+      Ok(Status::Unauthorized)
+    }
+  }
+}
+
 #[get("/product/<pn>", format = "json")]
 pub fn api(config: State<UrmConfig>, db: UrmDb, pn: String)
   -> Result<Option<Json<mongodb::Document>>, Json<mongodb::Error>>

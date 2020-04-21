@@ -49,6 +49,7 @@ fn main() {
         product::api,
         product::api_create,
         product::api_set_field,
+        product::api_remove,
         search::ui,
         search::api,
       ]

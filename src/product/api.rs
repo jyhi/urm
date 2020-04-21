@@ -37,3 +37,14 @@ pub fn update_db(db: &UrmDb, config: &UrmConfig, pn: &str, field: mongodb::Docum
     Err(e) => Err(e)
   }
 }
+
+pub fn delete_from_db(db: &UrmDb, config: &UrmConfig, pn: &str)
+  -> Result<(), mongodb::Error>
+{
+  match db.collection(&config.collection.products)
+    .delete_one(doc!{ "pn": pn }, None)
+  {
+    Ok(_) => Ok(()),
+    Err(e) => Err(e)
+  }
+}
