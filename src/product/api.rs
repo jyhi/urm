@@ -17,3 +17,12 @@ pub fn from_db(db: &UrmDb, config: &UrmConfig, pn: String)
     None => Ok(None)
   }
 }
+
+pub fn to_db(db: &UrmDb, config: &UrmConfig, doc: mongodb::Document)
+  -> Result<(), mongodb::Error>
+{
+  match db.collection(&config.collection.products).insert_one(doc, None) {
+    Ok(_) => Ok(()),
+    Err(e) => Err(e)
+  }
+}
