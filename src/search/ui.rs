@@ -7,7 +7,6 @@ use rocket_contrib::databases::mongodb::{
   db::ThreadedDatabase,
 };
 use crate::database::UrmDb;
-use crate::context::PageInfo;
 use crate::config::UrmConfig;
 use super::SearchQuery;
 
@@ -49,23 +48,13 @@ pub struct SearchInfo {
 #[derive(Serialize)]
 pub struct Context<'a> {
   pub urm: &'a UrmConfig,
-  pub page: PageInfo,
   pub search: SearchInfo,
 }
 
 impl<'a> Context<'a> {
-  pub fn from_db(db: &UrmDb, config: &'a UrmConfig, query: &SearchQuery, page: u64, nitem: u64)
+  pub fn from_db(db: &UrmDb, config: &'a UrmConfig, query: &SearchQuery)
     -> Result<Self, mongodb::Error>
   {
-    let nresult = db.collection(&query.coll)
-      .count(Some(doc!{ &query.k: RegExp(query.v.clone(), "i".to_string() )}), None)? as u64;
-    let nskip = (page - 1) * nitem;
-    let page_info = PageInfo {
-      current: page,
-      min: 1,
-      max: (nresult - 1) / nitem + 1
-    };
-
     let base_path = if &query.coll == &config.collection.products {
       "/product".to_string()
     } else if &query.coll == &config.collection.repositories {
@@ -76,8 +65,6 @@ impl<'a> Context<'a> {
 
     let results = db.collection(&query.coll)
       .find(Some(doc!{ &query.k: RegExp(query.v.clone(), "i".to_string() )}), None)?
-      .skip(nskip as usize)
-      .take(nitem as usize)
       .filter_map(|rdoc| rdoc.ok()) // XXX: TODO: Error handling
       .map(|rdoc| {
         let value = rdoc.get(&query.k).unwrap().to_string();
@@ -95,7 +82,6 @@ impl<'a> Context<'a> {
 
     Ok(Context {
       urm: &config,
-      page: page_info,
       search: search_info,
     })
   }

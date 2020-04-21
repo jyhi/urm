@@ -17,27 +17,21 @@ pub struct SearchQuery {
   pub coll: String,
 }
 
-#[get("/search?<page>&<nitem>&<query..>", format = "json")]
-pub fn api(db: UrmDb, query: Form<SearchQuery>, page: Option<u64>, nitem: Option<u64>)
+#[get("/search?<query..>", format = "json")]
+pub fn api(db: UrmDb, query: Form<SearchQuery>)
   -> Result<Json<Vec<mongodb::Document>>, Json<mongodb::Error>>
 {
-  let page = page.unwrap_or(1);
-  let nitem = nitem.unwrap_or(10);
-
-  match api::from_db(&db, &query, page, nitem) {
+  match api::from_db(&db, &query) {
     Ok(r) => Ok(Json(r)),
     Err(e) => Err(Json(e))
   }
 }
 
-#[get("/search?<page>&<nitem>&<query..>", format = "html", rank = 1)]
-pub fn ui(config: State<UrmConfig>, db: UrmDb, query: Form<SearchQuery>, page: Option<u64>, nitem: Option<u64>)
+#[get("/search?<query..>", format = "html", rank = 1)]
+pub fn ui(config: State<UrmConfig>, db: UrmDb, query: Form<SearchQuery>)
   -> Result<Template, mongodb::Error>
 {
-  let page = page.unwrap_or(1);
-  let nitem = nitem.unwrap_or(10);
-
   Ok(
-    Template::render("search", ui::Context::from_db(&db, &config, &query, page, nitem)?)
+    Template::render("search", ui::Context::from_db(&db, &config, &query)?)
   )
 }
