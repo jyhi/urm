@@ -47,6 +47,36 @@ pub fn api_create(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, product: P
   }
 }
 
+pub struct PatchedField(pub String);
+
+impl FromDataSimple for PatchedField {
+  type Error = std::io::Error;
+
+  fn from_data(_: &Request, data: Data) -> Outcome<Self, Self::Error> {
+    let mut req_body_str = String::new();
+    if let Err(e) = data.open().take(4096).read_to_string(&mut req_body_str) {
+      return Outcome::Failure((Status::InternalServerError, e))
+    }
+
+    Outcome::Success(PatchedField(req_body_str))
+  }
+}
+
+#[patch("/product/<pn>", format = "json", data = "<field>")]
+pub fn api_set_field(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, pn: String, field: PatchedField)
+  -> Result<Status, mongodb::Error>
+{
+  match auth::check_db(&db, &config, &cred)? {
+    Some(_) => {
+      api::update_db(&db, &config, &pn, serde_json::from_str(&field.0).unwrap())?;
+      Ok(Status::NoContent)
+    }
+    None => {
+      Ok(Status::Unauthorized)
+    }
+  }
+}
+
 #[get("/product/<pn>", format = "json")]
 pub fn api(config: State<UrmConfig>, db: UrmDb, pn: String)
   -> Result<Option<Json<mongodb::Document>>, Json<mongodb::Error>>
