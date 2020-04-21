@@ -17,3 +17,6 @@ toml = "0.5"
 version = "0.4.4"
 default-features = false
 features = ["helmet", "serve", "json", "tera_templates", "mongodb_pool"]
+
+[workspace]
+members = ["utils/genuser"]
