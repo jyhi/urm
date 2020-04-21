@@ -1,8 +1,11 @@
 [package]
 name = "urm"
+description = "A reinvented wheel for simple repository management"
 version = "0.1.0"
 authors = ["Junde Yhi <lmy441900@aosc.xyz>"]
 license = "GPL-3.0"
+readme = "README.md"
+repository = "https://github.com/lmy441900/urm"
 edition = "2018"
 
 [dependencies]
