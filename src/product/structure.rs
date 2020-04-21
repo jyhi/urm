@@ -6,7 +6,7 @@ use crate::context::{Tag, Attribute};
 pub struct Product {
   pub pn: String,
   pub name: String,
-  pub amount: u64,
+  pub amount: f64,
   pub r#in: String,
   pub on: String,
   pub tags: Vec<Tag>,
@@ -18,7 +18,7 @@ impl Default for Product {
     Product {
       pn: "Unknown".to_string(),
       name: "Unknown".to_string(),
-      amount: 0,
+      amount: 0.0,
       r#in: "Unknown".to_string(),
       on: "Unknown".to_string(),
       tags: vec![],
@@ -39,7 +39,14 @@ impl From<mongodb::Document> for Product {
           p.name = f.1.as_str().unwrap_or("Unknown").to_string()
         }
         "amount" => {
-          p.amount = f.1.as_i64().unwrap_or(0) as u64
+          // XXX: amount should be in u64, however:
+          //
+          // 1. The MongoDB driver treats all numbers as i64;
+          // 2. Serde deserializes only negative numbers to i64;
+          //
+          // ... as a workaround, all numbers are stored as f64, and f64 display
+          // is also supported (although it looks quite weird).
+          p.amount = f.1.as_f64().unwrap_or(0.0)
         }
         "in" => {
           p.r#in = f.1.as_str().unwrap_or("Unknown").to_string()
