@@ -77,6 +77,37 @@ pub fn api_set_field(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, pn: Str
   }
 }
 
+pub struct PutProduct(pub String);
+
+impl FromDataSimple for PutProduct {
+  type Error = std::io::Error;
+
+  fn from_data(_: &Request, data: Data) -> Outcome<Self, Self::Error> {
+    let mut req_body_str = String::new();
+    if let Err(e) = data.open().take(4096).read_to_string(&mut req_body_str) {
+      return Outcome::Failure((Status::InternalServerError, e))
+    }
+
+    Outcome::Success(PutProduct(req_body_str))
+  }
+}
+
+#[put("/product/<pn>", format = "json", data = "<product>")]
+pub fn api_replace(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, pn: String, product: PutProduct)
+  -> Result<Status, mongodb::Error>
+{
+  match auth::check_db(&db, &config, &cred)? {
+    Some(_) => {
+      api::replace_to_db(&db, &config, &pn, serde_json::from_str(&product.0).unwrap())?;
+      Ok(Status::NoContent)
+    }
+    None => {
+      Ok(Status::Unauthorized)
+    }
+  }
+}
+
+
 #[delete("/product/<pn>")]
 pub fn api_remove(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, pn: String)
   -> Result<Status, mongodb::Error>
