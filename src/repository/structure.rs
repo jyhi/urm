@@ -28,7 +28,7 @@ impl Default for Repository {
 
 impl From<mongodb::Document> for Repository {
   fn from(doc: mongodb::Document) -> Self {
-    doc.iter().fold(Default::default(), |mut r, f| {
+    doc.iter().fold(Self::default(), |mut r, f| {
       // r: Repository, f: (&String, &Bson)
       match f.0.as_str() {
         "ln_p" => {

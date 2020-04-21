@@ -108,12 +108,12 @@ impl UrmConfig {
           Ok(c) => c,
           Err(e) => {
             eprintln!("Failed to parse the configuration file: {}. Using the default.", e);
-            Default::default()
+            Self::default()
           }
         }
       }
       Err(_) => {
-        Default::default()
+        Self::default()
       }
     }
   }

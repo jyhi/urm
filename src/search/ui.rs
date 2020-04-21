@@ -19,7 +19,7 @@ pub struct SearchResult {
 
 impl From<mongodb::Document> for SearchResult {
   fn from(doc: mongodb::Document) -> Self {
-    doc.iter().fold(Default::default(), |mut r, f| {
+    doc.iter().fold(Self::default(), |mut r, f| {
       // r: SearchResult, f: (&String, &Bson)
       match f.0.as_str() {
         "pn" | "ln_p" => {

@@ -29,7 +29,7 @@ impl Default for Product {
 
 impl From<mongodb::Document> for Product {
   fn from(doc: mongodb::Document) -> Self {
-    doc.iter().fold(Default::default(), |mut p, f| {
+    doc.iter().fold(Product::default(), |mut p, f| {
       // p: Product, f: (&'a String, &'a Bson)
       match f.0.as_str() {
         "pn" => {
@@ -61,7 +61,7 @@ impl From<mongodb::Document> for Product {
               .map(|t| Tag { name: t.as_str().unwrap_or("Unknown").to_string() })
               .collect();
           } else {
-            p.tags = Default::default();
+            p.tags = vec![];
           }
         }
         _ => {
