@@ -41,6 +41,7 @@ fn main() {
         repositories::api,
         repository::ui,
         repository::api,
+        repository::api_create,
         products::ui,
         products::api,
         product::ui,
