@@ -107,7 +107,6 @@ pub fn api_replace(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, pn: Strin
   }
 }
 
-
 #[delete("/product/<pn>")]
 pub fn api_remove(config: State<UrmConfig>, db: UrmDb, cred: UrmAuth, pn: String)
   -> Result<Status, mongodb::Error>
