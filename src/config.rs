@@ -1,122 +1,107 @@
 use serde::{Serialize, Deserialize};
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Static {
+  #[serde(default = "Static::default_bootstrap_css")]
   pub bootstrap_css: String,
+  #[serde(default = "Static::default_bootstrap_bundle_js")]
   pub bootstrap_bundle_js: String,
+  #[serde(default = "Static::default_jquery_js")]
   pub jquery_js: String,
+}
+
+impl Static {
+  fn default_bootstrap_css() -> String {
+    String::from("/css/bootstrap.min.css")
+  }
+
+  fn default_bootstrap_bundle_js() -> String {
+    String::from("/js/bootstrap.bundle.min.js")
+  }
+
+  fn default_jquery_js() -> String {
+    String::from("/js/jquery.min.js")
+  }
 }
 
 impl Default for Static {
   fn default() -> Self {
     Static {
-      bootstrap_css: "/css/bootstrap.min.css".to_string(),
-      bootstrap_bundle_js: "/js/bootstrap.bundle.min.js".to_string(),
-      jquery_js: "/js/jquery.min.js".to_string(),
+      bootstrap_css: Static::default_bootstrap_css(),
+      bootstrap_bundle_js: Static::default_bootstrap_bundle_js(),
+      jquery_js: Static::default_jquery_js(),
     }
   }
 }
 
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct Collection {
+  #[serde(default = "Collection::default_products")]
   pub products: String,
+  #[serde(default = "Collection::default_repositories")]
   pub repositories: String,
+  #[serde(default = "Collection::default_users")]
   pub users: String,
+}
+
+impl Collection {
+  fn default_products() -> String {
+    String::from("products")
+  }
+
+  fn default_repositories() -> String {
+    String::from("repositories")
+  }
+
+  fn default_users() -> String {
+    String::from("users")
+  }
 }
 
 impl Default for Collection {
   fn default() -> Self {
     Collection {
-      products: "products".to_string(),
-      repositories: "repositories".to_string(),
-      users: "users".to_string(),
+      products: Collection::default_products(),
+      repositories: Collection::default_repositories(),
+      users: Collection::default_users(),
     }
   }
 }
 
-#[derive(Serialize)]
-pub struct Pbkdf2 {
-  pub iterations: u32,
-}
-
-impl Default for Pbkdf2 {
-  fn default() -> Self {
-    Pbkdf2 {
-      iterations: 10000,
-    }
-  }
-}
-
-#[derive(Serialize)]
+#[derive(Serialize, Deserialize)]
 pub struct UrmConfig {
+  #[serde(default = "UrmConfig::default_brand")]
   pub brand: String,
+  #[serde(default = "UrmConfig::default_product_name")]
   pub product_name: String,
+  #[serde(default = "UrmConfig::default_version")]
   pub version: String,
+  #[serde(default = "UrmConfig::default_mount_point")]
   pub mount_point: String,
+  #[serde(default)]
   pub r#static: Static,
+  #[serde(default)]
   pub collection: Collection,
 }
 
-impl From<UrmConfigFile> for UrmConfig {
-  fn from(file: UrmConfigFile) -> Self {
-    UrmConfig {
-      brand: file.urm.brand.unwrap_or("Unified Repository Manager".to_string()),
-      product_name: file.urm.product_name.unwrap_or(env!("CARGO_PKG_NAME").to_string()),
-      version: file.urm.version.unwrap_or(env!("CARGO_PKG_VERSION").to_string()),
-      mount_point: file.urm.mount_point.unwrap_or("/".to_string()),
-      r#static: if let Some(s) = file.urm.r#static {
-        Static {
-          bootstrap_css: s.bootstrap_css.unwrap_or("/css/bootstrap.min.css".to_string()),
-          bootstrap_bundle_js: s.bootstrap_bundle_js.unwrap_or("/js/bootstrap.bundle.min.js".to_string()),
-          jquery_js: s.jquery_js.unwrap_or("/js/jquery.min.js".to_string()),
-        }
-      } else {
-        Static::default()
-      },
-      collection: if let Some(coll) = file.urm.collection {
-        Collection {
-          products: coll.products.unwrap_or("products".to_string()),
-          repositories: coll.repositories.unwrap_or("repositories".to_string()),
-          users: coll.users.unwrap_or("users".to_string())
-        }
-      } else {
-        Default::default()
-      },
-    }
+impl UrmConfig {
+  fn default_brand() -> String {
+    String::from("Unified Repository Manager")
   }
-}
 
-#[derive(Default, Deserialize)]
-struct StaticFile {
-  bootstrap_css: Option<String>,
-  bootstrap_bundle_js: Option<String>,
-  jquery_js: Option<String>,
-}
+  fn default_product_name() -> String {
+    String::from(env!("CARGO_PKG_NAME"))
+  }
 
-#[derive(Default, Deserialize)]
-struct CollectionFile {
-  products: Option<String>,
-  repositories: Option<String>,
-  users: Option<String>,
-}
+  fn default_version() -> String {
+    String::from(env!("CARGO_PKG_VERSION"))
+  }
 
-#[derive(Default, Deserialize)]
-struct UrmFile {
-  brand: Option<String>,
-  product_name: Option<String>,
-  version: Option<String>,
-  mount_point: Option<String>,
-  r#static: Option<StaticFile>,
-  collection: Option<CollectionFile>,
-}
+  fn default_mount_point() -> String {
+    String::from("/")
+  }
 
-#[derive(Default, Deserialize)]
-struct UrmConfigFile {
-  urm: UrmFile
-}
-
-impl UrmConfigFile {
-  fn from_file(filename: String) -> Self {
+  pub fn from_file(filename: &str) -> Self {
     match std::fs::read_to_string(&filename) {
       Ok(s) => {
         match toml::from_str(&s) {
@@ -134,6 +119,15 @@ impl UrmConfigFile {
   }
 }
 
-pub fn read_config_file(filename: String) -> UrmConfig {
-  UrmConfigFile::from_file(filename).into()
+impl Default for UrmConfig {
+  fn default() -> Self {
+    UrmConfig {
+      brand: UrmConfig::default_brand(),
+      product_name: UrmConfig::default_product_name(),
+      version: UrmConfig::default_version(),
+      mount_point: UrmConfig::default_mount_point(),
+      r#static: Static::default(),
+      collection: Collection::default(),
+    }
+  }
 }

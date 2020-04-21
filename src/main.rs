@@ -24,10 +24,11 @@ use rocket_contrib::helmet::SpaceHelmet;
 use rocket_contrib::templates::Template;
 use rocket_contrib::serve::StaticFiles;
 use database::UrmDb;
+use config::UrmConfig;
 
 fn main() {
   // TODO: Read file name from command line
-  let urm_config = config::read_config_file("urm.toml".to_string());
+  let urm_config = UrmConfig::from_file("urm.toml");
 
   rocket::ignite()
     .mount(
