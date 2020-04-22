@@ -1,5 +1,6 @@
 {% import "include/header" as header %}
 {% import "include/tags" as tags %}
+{% import "include/modal-remove" as modalremove %}
 {% import "include/pagenav" as pagination %}
 <!DOCTYPE html>
 <html lang="en">
@@ -13,6 +14,7 @@
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     {{ header::put() }}
+    {{ modalremove::put(id="modal-remove")}}
 
     <div id="content" class="container">
       {# Warning for JavaScript presence #}
@@ -39,7 +41,7 @@
               <button type="button" class="btn btn-link">In</button>
               <button type="button" class="btn btn-link">Out</button>
               <button type="button" class="btn btn-link">Edit</button>
-              <button type="button" class="btn btn-danger">Remove</button>
+              <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-remove">Remove</button>
             </div>
           </div>
           {# In Stock #}
@@ -102,4 +104,5 @@
   </body>
 
   {% include "include/js-common" %}
+  <script src="/js/repository.js"></script>
 </html>
