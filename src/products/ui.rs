@@ -23,7 +23,7 @@ impl<'a> Context<'a> {
     let page_info = PageInfo {
       current: page,
       min: 1,
-      max: (nprod - 1) / nitem + 1
+      max: if nprod == 0 { 1 } else { (nprod - 1) / nitem + 1 }
     };
 
     let products = db.collection(&config.collection.products)
