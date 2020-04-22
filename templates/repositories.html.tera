@@ -1,4 +1,5 @@
 {% import "include/header" as header %}
+{% import "include/pagenav" as pagination %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -58,6 +59,10 @@
           </div>
         </div>
         {% endfor %}
+      </div>
+      {# Pagination #}
+      <div class="mt-3">
+      {{ pagination::put(min=page.min, current=page.current, max=page.max) }}
       </div>
     </div>
     {# Footer #}
