@@ -44,12 +44,15 @@ impl From<mongodb::Document> for Repository {
         // not treated as an attribute.
         "has" => {}
         _ => {
-          r.attributes.push(
-            Attribute {
-              key: f.0.to_string(),
-              value: f.1.to_string(),
-            }
-          );
+          // Skip MongoDB ID; this should be hidden from the user.
+          if f.0 != "_id" {
+            r.attributes.push(
+              Attribute {
+                key: f.0.to_string(),
+                value: f.1.to_string(),
+              }
+            );
+          };
         }
       };
 
