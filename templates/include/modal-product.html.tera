@@ -1,0 +1,28 @@
+{% macro change(id,pn,amount) %}
+<div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}-title" aria-describedby="{{ id }}-desc" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="{{ id }}-title">Change Amount</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="sr-only" id="{{ id }}-desc">Use the form below to change the amount of this product.</p>
+        <div class="form-group">
+          <p>P/N</p>
+          <strong>{{ pn }}</strong>
+        </div>
+        <div class="form-group">
+          <label for="{{ id }}-input-amount">Amount</label>
+          <input type="number" class="form-control" id="{{ id }}-input-amount" value="{{ amount }}" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="{{ id }}-btn-submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
