@@ -26,3 +26,43 @@
   </div>
 </div>
 {% endmacro %}
+
+{% macro edit(id,product)%}
+<div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}-title" aria-describedby="{{ id }}-desc" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="{{ id }}-title">Edit</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="{{ id }}-body">
+        <p class="sr-only" id="{{ id }}-desc">Use the form below to edit the attributes of this product.</p>
+        {% for key, value in product %}
+        {% if key == "attributes" %}
+        {% for attr in product.attributes %}
+        <div class="form-group">
+          <label for="{{ id }}-input-{{ attr.key }}">{{ attr.key }}</label>
+          <input class="form-control" id="{{ id }}-input-{{ attr.key }}" value="{{ attr.value }}" required>
+        </div>
+        {% endfor %}
+        {% else %}
+        <div class="form-group">
+          <label for="{{ id }}-input-{{ key }}">{{ key }}</label>
+          {% if key == "amount" %}
+          <input type="number" class="form-control" id="{{ id }}-input-amount" value="{{ value }}" required>
+          {% else %}
+          <input class="form-control" id="{{ id }}-input-{{ key }}" value="{{ value }}" required>
+          {% endif %}
+        </div>
+        {% endif %}
+        {% endfor %}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="{{ id }}-btn-submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

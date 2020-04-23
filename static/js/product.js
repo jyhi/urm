@@ -13,6 +13,28 @@ $("#modal-change-btn-submit").click(() => {
   })
 })
 
+$("#modal-edit-btn-submit").click(() => {
+  let validity = $
+    .map($("#modal-edit-body input"), (v) => v.validity.valid)
+    .reduce((a, v) => a & v, true)
+  if (!validity)
+    return
+
+  let keys = $.map($("#modal-edit-body label"), (v) => v.textContent)
+  let values = $.map($("#modal-edit-body input"), (v) => v.value)
+  let object = Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]))
+
+  $.ajax({
+    method: "PUT",
+    url: "",
+    contentType: "application/json",
+    data: JSON.stringify(object)
+  }).done(() => {
+    $("#modal-edit").modal("hide")
+    location.reload()
+  })
+})
+
 $("#modal-remove-btn-remove").click(() => {
   $.ajax({
     method: "DELETE",
