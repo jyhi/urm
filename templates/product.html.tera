@@ -14,9 +14,9 @@
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     {{ header::put() }}
-    {{ modalremove::put(id="modal-remove") }}
-    {{ modalproduct::change(id="modal-change",pn=product.pn,amount=product.amount) }}
-    {{ modalproduct::edit(id="modal-edit",product=product) }}
+    {{ modalremove::put() }}
+    {{ modalproduct::change(pn=product.pn,amount=product.amount) }}
+    {{ modalproduct::edit(product=product) }}
 
     <div id="content" class="container">
       {# Warning for JavaScript presence #}

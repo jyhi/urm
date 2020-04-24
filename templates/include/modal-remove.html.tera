@@ -1,19 +1,19 @@
-{% macro put(id) %}
-<div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}-title" aria-describedby="{{ id }}-desc" aria-hidden="true">
+{% macro put() %}
+<div class="modal fade" id="modal-remove" tabindex="-1" role="dialog" aria-labelledby="modal-remove-title" aria-describedby="modal-remove-desc" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="{{ id }}-title">Are You Sure?</h5>
+        <h5 class="modal-title" id="modal-remove-title">Are You Sure?</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
-        <span id="{{ id }}-desc">Click "Remove" again below to confirm this operation.</span>
+        <span id="modal-remove-desc">Click "Remove" again below to confirm this operation.</span>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Dismiss</button>
-        <button type="button" class="btn btn-danger" id="{{ id }}-btn-remove">Remove</button>
+        <button type="button" class="btn btn-danger" id="modal-remove-btn-remove">Remove</button>
       </div>
     </div>
   </div>

@@ -14,7 +14,7 @@
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     {{ header::put() }}
-    {{ modalremove::put(id="modal-remove")}}
+    {{ modalremove::put }}
 
     <div id="content" class="container">
       {# Warning for JavaScript presence #}
