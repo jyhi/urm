@@ -2,7 +2,6 @@
 {% import "include/header" as header %}
 {% import "include/tags" as tags %}
 {% import "include/modals" as modal %}
-{% import "include/pagenav" as pagination %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -32,7 +31,7 @@
           <span class="text-secondary">L/N-P: {{ repository.ln_p }}</span>
           <h1 class="display-3">{{ repository.name }}</h1>
           {# Tags #}
-          {{ tags::put(tags=repository.tags) }}
+          {{ common::tags(tags=repository.tags) }}
         </div>
         <div class="col-12 col-md-auto mt-3 mt-md-0">
           {# Operations #}

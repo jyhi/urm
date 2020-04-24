@@ -1,6 +1,5 @@
 {% import "include/commons" as common %}
 {% import "include/header" as header %}
-{% import "include/pagenav" as pagination %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -70,7 +69,7 @@
         </div>
       </div>
       {# Pagination #}
-      {{ pagination::put(min=page.min, current=page.current, max=page.max) }}
+      {{ common::pagenav(min=page.min, current=page.current, max=page.max) }}
     </div>
     {# Footer #}
     {% include "include/footer" %}

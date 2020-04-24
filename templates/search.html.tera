@@ -1,7 +1,6 @@
 {% import "include/commons" as common %}
 {% import "include/header" as header %}
 {% import "include/tags" as tags %}
-{% import "include/pagenav" as pagination %}
 <!DOCTYPE html>
 <html lang="en">
   <head>

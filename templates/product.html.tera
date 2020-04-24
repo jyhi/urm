@@ -41,7 +41,7 @@
             </div>
           </div>
           {# Tags #}
-          {{ tags::put(tags=product.tags) }}
+          {{ common::tags(tags=product.tags) }}
         </div>
         <div class="col-12 col-md-auto mt-3 mt-md-0">
           <div class="row justify-content-end">
