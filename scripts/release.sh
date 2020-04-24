@@ -34,7 +34,7 @@ if [ "${STRIP}" ]; then
 fi
 
 for extra in "$@"; do
-  cp -r "${extra}" "${DIR_NAME}"
+  cp -rv "${extra}" "${DIR_NAME}"
 done
 
 tar c "${DIR_NAME}" | xz -zecv -T 0 > "${TARBALL_NAME}.tar.xz"
