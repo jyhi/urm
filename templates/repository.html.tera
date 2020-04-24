@@ -1,6 +1,6 @@
 {% import "include/header" as header %}
 {% import "include/tags" as tags %}
-{% import "include/modal-remove" as modalremove %}
+{% import "include/modals" as modal %}
 {% import "include/pagenav" as pagination %}
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +14,7 @@
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     {{ header::put() }}
-    {{ modalremove::put }}
+    {{ modal::remove() }}
 
     <div id="content" class="container">
       {# Warning for JavaScript presence #}

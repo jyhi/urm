@@ -1,7 +1,6 @@
 {% import "include/header" as header %}
 {% import "include/tags" as tags %}
-{% import "include/modal-product" as modalproduct %}
-{% import "include/modal-remove" as modalremove %}
+{% import "include/modals" as modal %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -14,9 +13,9 @@
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     {{ header::put() }}
-    {{ modalremove::put() }}
-    {{ modalproduct::change(pn=product.pn,amount=product.amount) }}
-    {{ modalproduct::edit(product=product) }}
+    {{ modal::change(pn=product.pn,amount=product.amount) }}
+    {{ modal::edit(product=product) }}
+    {{ modal::remove() }}
 
     <div id="content" class="container">
       {# Warning for JavaScript presence #}
