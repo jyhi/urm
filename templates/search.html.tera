@@ -1,6 +1,4 @@
 {% import "include/commons" as common %}
-{% import "include/header" as header %}
-{% import "include/tags" as tags %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -12,7 +10,7 @@
   <body>
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
-    {{ header::put() }}
+    {{ common::navbar() }}
 
     <div id="content" class="container">
       {# Warning for JavaScript presence #}
@@ -60,7 +58,7 @@
       </div>
     </div>
     {# Footer #}
-    {% include "include/footer" %}
+    {{ common::footer() }}
   </body>
 
   {{ common::js() }}

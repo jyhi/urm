@@ -12,6 +12,53 @@
 <script src="{{ urm.static.bootstrap_bundle_js }}"></script>
 {% endmacro %}
 
+{% macro navbar(active="None") %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  {# Brand #}
+  <a class="navbar-brand" href="/">{{ urm.brand }}</a>
+  {# Toggler on small screens #}
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  {# Navbar contents #}
+  <div id="navbarSupportedContent" class="collapse navbar-collapse">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        {% if active == "Dashboard" %}
+        <a class="nav-link active" href="/dashboard">Dashboard<span class="sr-only"> (current)</span></a>
+        {% else %}
+        <a class="nav-link" href="/dashboard">Dashboard</a>
+        {% endif %}
+      </li>
+      <li class="nav-item">
+        {% if active == "Repositories" %}
+        <a class="nav-link active" href="/repositories">Repositories<span class="sr-only"> (current)</span></a>
+        {% else %}
+        <a class="nav-link" href="/repositories">Repositories</a>
+        {% endif %}
+      </li>
+      <li class="nav-item">
+        {% if active == "Products" %}
+        <a class="nav-link active" href="/products">Products<span class="sr-only"> (current)</span></a>
+        {% else %}
+        <a class="nav-link" href="/products">Products</a>
+        {% endif %}
+      </li>
+    </ul>
+  </div>
+</nav>
+{% endmacro %}
+
+{% macro footer() %}
+<div class="container-fluid bg-light mt-3 py-3">
+  <div class="row justify-content-center">
+    <div class="col-auto">
+      {{ urm.product_name }} {{ urm.version }}
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
 {% macro pagenav(min, current, max) %}
 <nav aria-label="Page navigation">
   <ul class="pagination justify-content-center">
