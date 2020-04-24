@@ -42,6 +42,8 @@ WriteResult({ "nInserted" : 1 })
 
 Finally, launch URM by simply invoking `./urm`.
 
+[rocket-doc]: https://rocket.rs/v0.4/guide/configuration/#rockettoml
+
 ## Build
 
 This project depends on [Rocket][rocket], which is a powerful but simple web framework for Rust. Since [Rocket][rocket] requires [Rust nightly][rust-nightly], a nightly version of the Rust compiler is required to compile this project. If you don't already have the Rust compiler installed, use [Rustup][rustup].
