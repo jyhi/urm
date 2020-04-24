@@ -2,7 +2,18 @@
 # Script for packaging a binary release of URM
 set -eo pipefail
 
-NAME="urm-$(git describe --always)-$(date '+%Y%m%d')"
+FILE_LIST=(
+  "target/release/urm"
+  "target/release/genuser"
+  "urm.toml"
+  "Rocket.toml"
+  "README.md"
+  "static/"
+  "templates/"
+)
+
+DIR_NAME="urm"
+TARBALL_NAME="urm-$(git describe --always)"
 
 if [ "$1" = "strip" ]; then
   STRIP=1
@@ -14,21 +25,18 @@ pushd utils/genuser
 cargo build --release
 popd
 
-mkdir "${NAME}"
+mkdir "${DIR_NAME}"
 
-cp target/release/{urm,genuser} "${NAME}"
+cp -r ${FILE_LIST[@]} "${DIR_NAME}"
+
 if [ "${STRIP}" ]; then
-  strip --strip-all "${NAME}/urm"
-  strip --strip-all "${NAME}/genuser"
+  strip --strip-all --verbose $(find "${DIR_NAME}" -type f -executable)
 fi
 
-cp urm.toml Rocket.toml README.md "${NAME}"
-cp -r static/ templates/ "${NAME}"
-
 for extra in "$@"; do
-  cp -r "${extra}" "${NAME}"
+  cp -r "${extra}" "${DIR_NAME}"
 done
 
-tar c "${NAME}" | xz -zecv -T 0 > "${NAME}.tar.xz"
+tar c "${DIR_NAME}" | xz -zecv -T 0 > "${TARBALL_NAME}.tar.xz"
 
-rm -r "${NAME}"
+rm -r "${DIR_NAME}"
