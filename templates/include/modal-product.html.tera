@@ -1,3 +1,66 @@
+{% macro stockin() %}
+<div class="modal fade" id="modal-stockin" tabindex="-1" role="dialog" aria-labelledby="modal-stockin-title" aria-describedby="modal-stockin-desc" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-stockin-title">Stock In</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-stockin-body">
+        <p class="sr-only" id="modal-stockin-desc">Use the form below to perform an inbound process.</p>
+        <div class="form-group">
+          <label for="modal-stockin-input-pn">P/N</label>
+          <input class="form-control" id="modal-stockin-input-pn" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-stockin-input-pn">Name</label>
+          <input class="form-control" id="modal-stockin-input-pn" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-stockin-input-pn">In</label>
+          <input class="form-control" id="modal-stockin-input-pn" required>
+        </div>
+        <button class="btn btn-block btn-primary" id="modal-stockin-btn-add-field">Add Field</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="modal-stockin-btn-submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
+{% macro stockout() %}
+<div class="modal fade" id="modal-stockout" tabindex="-1" role="dialog" aria-labelledby="modal-stockout-title" aria-describedby="modal-stockout-desc" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-stockout-title">Stock Out</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p class="sr-only" id="modal-stockout-desc">Use the form below to perform an outbound process.</p>
+        <div class="form-group">
+          <label for="modal-stockout-input-pn">P/N</label>
+          <input class="form-control" id="modal-stockout-input-pn" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-stockout-input-pn">Recipient</label>
+          <input class="form-control" id="modal-stockout-input-pn" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="modal-stockout-btn-submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
 {% macro change(id,pn,amount) %}
 <div class="modal fade" id="{{ id }}" tabindex="-1" role="dialog" aria-labelledby="{{ id }}-title" aria-describedby="{{ id }}-desc" aria-hidden="true">
   <div class="modal-dialog" role="document">

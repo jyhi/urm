@@ -1,4 +1,5 @@
 {% import "include/header" as header %}
+{% import "include/modal-product" as modalproduct %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,6 +12,8 @@
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     {{ header::put(active="Dashboard") }}
+    {{ modalproduct::stockin() }}
+    {{ modalproduct::stockout() }}
 
     <div id="content" class="container">
       {# Warning for JavaScript presence #}
@@ -38,15 +41,15 @@
       <div class="row mt-3">
         <div class="col">
           <div class="card-deck">
-            <div class="card bg-primary text-white">
-              <div class="card-body">
-                <h5 class="card-title"><a href="#" class="text-white stretched-link">Stock In</a></h5>
+            <div class="card text-white">
+              <div class="card-body btn btn-primary text-left" id="btn-stockin" role="button">
+                <h5 class="card-title">Stock In</h5>
                 <h6 class="card-subtitle">Register goods into a repository.</h6>
               </div>
             </div>
-            <div class="card bg-secondary text-white">
-              <div class="card-body">
-                <h5 class="card-title"><a href="#" class="text-white stretched-link">Stock Out</a></h5>
+            <div class="card text-white">
+              <div class="card-body btn btn-secondary text-left" id="btn-stockout" role="button">
+                <h5 class="card-title">Stock Out</h5>
                 <h6 class="card-subtitle">Move goods out of a repository.</h6>
               </div>
             </div>
@@ -125,4 +128,5 @@
   </body>
 
   {% include "include/js-common" %}
+  <script src="/js/dashboard.js"></script>
 </html>
