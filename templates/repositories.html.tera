@@ -1,10 +1,11 @@
+{% import "include/commons" as common %}
 {% import "include/header" as header %}
 {% import "include/pagenav" as pagination %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    {% include "include/meta-common" %}
-    {% include "include/css-common" %}
+    {{ common::meta() }}
+    {{ common::css() }}
     <title>List of Repositories - {{ urm.brand }}</title>
   </head>
 
@@ -69,5 +70,5 @@
     {% include "include/footer" %}
   </body>
 
-  {% include "include/js-common" %}
+  {{ common::js() }}
 </html>

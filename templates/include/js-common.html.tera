@@ -1,2 +1,0 @@
-<script src="{{ urm.static.jquery_js }}"></script>
-<script src="{{ urm.static.bootstrap_bundle_js }}"></script>
