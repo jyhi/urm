@@ -14,15 +14,15 @@ $("#modal-change-btn-submit").click(() => {
 })
 
 $("#modal-edit-btn-submit").click(() => {
-  let validity = $
+  const validity = $
     .map($("#modal-edit-body input"), (v) => v.validity.valid)
     .reduce((a, v) => a & v, true)
   if (!validity)
     return
 
-  let keys = $.map($("#modal-edit-body label"), (v) => v.textContent)
-  let values = $.map($("#modal-edit-body input"), (v) => v.value)
-  let object = Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]))
+  const keys = $.map($("#modal-edit-body label"), (v) => v.textContent)
+  const values = $.map($("#modal-edit-body input"), (v) => v.value)
+  const object = Object.fromEntries(keys.map((_, i) => [keys[i], values[i]]))
 
   $.ajax({
     method: "PUT",

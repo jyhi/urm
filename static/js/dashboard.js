@@ -7,7 +7,7 @@ $("#btn-stockout").click(() => {
 })
 
 $("#modal-stockin-btn-add-field").click(() => {
-  let n = $("#modal-stockin-body div.row").length;
+  const n = $("#modal-stockin-body div.row").length;
 
   $("#modal-stockin-body").append(`
 <div class="row no-gutters mt-3" id="modal-stockin-field${n + 1}">
@@ -24,6 +24,6 @@ $("#modal-stockin-btn-add-field").click(() => {
 </div>`)
 })
 
-let removeField = (f) => {
+const removeField = (f) => {
   $(f).detach();
 }
