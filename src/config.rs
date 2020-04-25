@@ -42,8 +42,6 @@ pub struct UrmConfig {
   pub product_name: String,
   #[serde(default = "UrmConfig::default_version")]
   pub version: String,
-  #[serde(default = "UrmConfig::default_mount_point")]
-  pub mount_point: String,
   #[serde(default)]
   pub collection: Collection,
 }
@@ -59,10 +57,6 @@ impl UrmConfig {
 
   fn default_version() -> String {
     String::from(env!("CARGO_PKG_VERSION"))
-  }
-
-  fn default_mount_point() -> String {
-    String::from("/")
   }
 
   pub fn from_file(filename: &str) -> Self {
@@ -89,7 +83,6 @@ impl Default for UrmConfig {
       brand: UrmConfig::default_brand(),
       product_name: UrmConfig::default_product_name(),
       version: UrmConfig::default_version(),
-      mount_point: UrmConfig::default_mount_point(),
       collection: Collection::default(),
     }
   }

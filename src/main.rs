@@ -32,7 +32,7 @@ fn main() {
 
   rocket::ignite()
     .mount(
-      &urm_config.mount_point,
+      "/",
       routes![
         index::ui,
         index::api,
@@ -58,7 +58,7 @@ fn main() {
         search::api,
       ]
     )
-    .mount(&urm_config.mount_point, StaticFiles::from("static"))
+    .mount("/", StaticFiles::from("static"))
     .register(catchers![auth::unauthorized])
     .attach(SpaceHelmet::default())
     .attach(Template::fairing())

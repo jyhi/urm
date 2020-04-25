@@ -11,9 +11,6 @@
 # Default: The version defined in Cargo.toml.
 # version = "major.minor.patch"
 
-# The base path where URM is supposed to mount on; this is sent to Rocket.
-# mount_point = "/"
-
 [collection]
 # Name of the MongoDB collection storing product data
 # products = "products"
