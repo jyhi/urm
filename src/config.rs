@@ -1,40 +1,6 @@
 use serde::{Serialize, Deserialize};
 
 #[derive(Serialize, Deserialize)]
-pub struct Static {
-  #[serde(default = "Static::default_bootstrap_css")]
-  pub bootstrap_css: String,
-  #[serde(default = "Static::default_bootstrap_bundle_js")]
-  pub bootstrap_bundle_js: String,
-  #[serde(default = "Static::default_jquery_js")]
-  pub jquery_js: String,
-}
-
-impl Static {
-  fn default_bootstrap_css() -> String {
-    String::from("/css/bootstrap.min.css")
-  }
-
-  fn default_bootstrap_bundle_js() -> String {
-    String::from("/js/bootstrap.bundle.min.js")
-  }
-
-  fn default_jquery_js() -> String {
-    String::from("/js/jquery.min.js")
-  }
-}
-
-impl Default for Static {
-  fn default() -> Self {
-    Static {
-      bootstrap_css: Static::default_bootstrap_css(),
-      bootstrap_bundle_js: Static::default_bootstrap_bundle_js(),
-      jquery_js: Static::default_jquery_js(),
-    }
-  }
-}
-
-#[derive(Serialize, Deserialize)]
 pub struct Collection {
   #[serde(default = "Collection::default_products")]
   pub products: String,
@@ -78,8 +44,6 @@ pub struct UrmConfig {
   pub version: String,
   #[serde(default = "UrmConfig::default_mount_point")]
   pub mount_point: String,
-  #[serde(default)]
-  pub r#static: Static,
   #[serde(default)]
   pub collection: Collection,
 }
@@ -126,7 +90,6 @@ impl Default for UrmConfig {
       product_name: UrmConfig::default_product_name(),
       version: UrmConfig::default_version(),
       mount_point: UrmConfig::default_mount_point(),
-      r#static: Static::default(),
       collection: Collection::default(),
     }
   }

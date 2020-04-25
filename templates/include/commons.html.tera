@@ -4,12 +4,12 @@
 {% endmacro %}
 
 {% macro css() %}
-<link rel="stylesheet" href="{{ urm.static.bootstrap_css }}" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.min.css" integrity="sha256-/ykJw/wDxMa0AQhHDYfuMEwVb4JHMx9h4jD4XvHqVzU=" crossorigin="anonymous" />
 {% endmacro %}
 
 {% macro js() %}
-<script src="{{ urm.static.jquery_js }}"></script>
-<script src="{{ urm.static.bootstrap_bundle_js }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.min.js" integrity="sha256-oKpAiD7qu3bXrWRVxnXLV1h7FlNV+p5YJBIr8LOCFYw=" crossorigin="anonymous"></script>
 {% endmacro %}
 
 {% macro navbar(active="None") %}

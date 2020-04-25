@@ -23,11 +23,3 @@
 
 # Name of the MongoDB collection storing user data
 # users = "users"
-
-# The following table specifies the paths to those common resources used by URM.
-# They can be configured to CDNs (by writing URLs), or can be served by this
-# server (by writing an absolute path). The defaults are local serving.
-[static]
-# bootstrap_css = "/css/bootstrap.min.css"
-# bootstrap_bundle_js = "/js/bootstrap.bundle.min.js"
-# jquery_js = "/js/jquery.min.js"
