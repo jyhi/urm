@@ -11,16 +11,16 @@
       <div class="modal-body" id="modal-stockin-body">
         <p class="sr-only" id="modal-stockin-desc">Use the form below to perform an inbound process.</p>
         <div class="form-group">
-          <label for="modal-stockin-input-pn">P/N</label>
-          <input class="form-control" id="modal-stockin-input-pn" required>
+          <label for="modal-stockin-input-pn">P/N <span class="text-secondary" aria-hidden="true">("<span class="real-key">pn</span>")</span></label>
+          <input class="form-control value" id="modal-stockin-input-pn" required>
         </div>
         <div class="form-group">
-          <label for="modal-stockin-input-pn">Name</label>
-          <input class="form-control" id="modal-stockin-input-pn" required>
+          <label for="modal-stockin-input-pn">Name <span class="text-secondary" aria-hidden="true">("<span class="real-key">name</span>")</span></label>
+          <input class="form-control value" id="modal-stockin-input-pn" required>
         </div>
         <div class="form-group">
-          <label for="modal-stockin-input-pn">In</label>
-          <input class="form-control" id="modal-stockin-input-pn" required>
+          <label for="modal-stockin-input-pn">In <span class="text-secondary" aria-hidden="true">("<span class="real-key">in</span>")</span></label>
+          <input class="form-control value" id="modal-stockin-input-pn" required>
         </div>
         <button class="btn btn-block btn-primary" id="modal-stockin-btn-add-field">Add Field</button>
       </div>
