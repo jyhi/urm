@@ -50,3 +50,33 @@ $("#modal-stockin-btn-submit").click(() => {
     location.reload()
   })
 })
+
+$("#modal-stockout-btn-submit").click(() => {
+  const validity = $
+    .map($("#modal-stockout-body input"), (v) => v.validity.valid)
+    .reduce((a, v) => a & v, true)
+  if (!validity)
+    return
+
+  const pn = $("#modal-stockout-input-pn")[0].value
+  const recipient = $("#modal-stockout-input-recipient")[0].value
+  const object = {"in": recipient}
+
+  $.getJSON(`/product/${pn}`, (product) => {
+    product.in = recipient
+    delete product.on
+
+    // Must be a string, see src/product/structure.rs
+    product.amount = "0"
+  }).done((product) => {
+    $.ajax({
+      method: "PUT",
+      url: `/product/${pn}`,
+      contentType: "application/json",
+      data: JSON.stringify(product)
+    }).done(() => {
+      $("#modal-stockout").modal("hide")
+      location.reload()
+    })
+  })
+})

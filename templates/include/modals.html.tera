@@ -42,15 +42,15 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body">
+      <div class="modal-body" id="modal-stockout-body">
         <p class="sr-only" id="modal-stockout-desc">Use the form below to perform an outbound process.</p>
         <div class="form-group">
-          <label for="modal-stockout-input-pn">P/N</label>
+          <label for="modal-stockout-input-pn">P/N <span class="text-secondary" aria-hidden="true">("pn")</span></label>
           <input class="form-control" id="modal-stockout-input-pn" required>
         </div>
         <div class="form-group">
-          <label for="modal-stockout-input-pn">Recipient</label>
-          <input class="form-control" id="modal-stockout-input-pn" required>
+          <label for="modal-stockout-input-recipient">Recipient <span class="text-secondary" aria-hidden="true">("in")</span></label>
+          <input class="form-control" id="modal-stockout-input-recipient" required>
         </div>
       </div>
       <div class="modal-footer">
