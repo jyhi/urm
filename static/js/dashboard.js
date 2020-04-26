@@ -7,10 +7,10 @@ $("#btn-stockout").click(() => {
 })
 
 $("#modal-stockin-btn-add-field").click(() => {
-  const n = $("#modal-stockin-body div.row").length;
+  const n = $("#modal-stockin-body .field").length;
 
   $("#modal-stockin-body").append(`
-<div class="row no-gutters mt-3" id="modal-stockin-field${n + 1}">
+<div class="row no-gutters mt-3 field" id="modal-stockin-field${n + 1}">
   <div class="col">
     <label for="modal-stockin-input-field${n + 1}-key" class="sr-only">Key</label>
     <input class="form-control" id="modal-stockin-input-field${n + 1}-key" placeholder="key" required>
