@@ -181,3 +181,33 @@
   </div>
 </div>
 {% endmacro %}
+
+{% macro newrepo() %}
+<div class="modal fade" id="modal-newrepo" tabindex="-1" role="dialog" aria-labelledby="modal-newrepo-title" aria-describedby="modal-newrepo-desc" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-newrepo-title">Create a New Repository</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-newrepo-body">
+        <p class="sr-only" id="modal-newrepo-desc">Use the form below to create a new repository.</p>
+        <div class="form-group">
+          <label for="modal-newrepo-input-pn">L/N-P <span class="text-secondary" aria-hidden="true">("<span class="real-key">ln_p</span>")</span></label>
+          <input class="form-control value" id="modal-newrepo-input-pn" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-newrepo-input-pn">Name <span class="text-secondary" aria-hidden="true">("<span class="real-key">name</span>")</span></label>
+          <input class="form-control value" id="modal-newrepo-input-pn" required>
+        </div>
+        <button class="btn btn-block btn-primary" id="modal-newrepo-btn-add-field">Add Field</button>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="modal-newrepo-btn-submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}

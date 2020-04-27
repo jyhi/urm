@@ -1,4 +1,5 @@
 {% import "include/commons" as common %}
+{% import "include/modals" as modal %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -11,6 +12,7 @@
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     {{ common::navbar(active="Repositories") }}
+    {{ modal::newrepo() }}
 
     <div id="content" class="container">
       {# Warning for JavaScript presence #}
@@ -30,6 +32,13 @@
           <h2 class="text-secondary">
             Total number of repositories: {{ nrepo }}
           </h2>
+        </div>
+        <div class="col-12 col-md-auto">
+          <div class="row justify-content-end">
+            <div class="col-auto">
+              <button class="btn btn-primary" data-toggle="modal" data-target="#modal-newrepo">New Repository</button>
+            </div>
+          </div>
         </div>
       </div>
       {# Card deck #}
@@ -69,4 +78,5 @@
   </body>
 
   {{ common::js() }}
+  <script src="/js/repositories.js"></script>
 </html>
