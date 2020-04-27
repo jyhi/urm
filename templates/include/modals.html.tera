@@ -61,6 +61,35 @@
 </div>
 {% endmacro %}
 
+{% macro stockmove() %}
+<div class="modal fade" id="modal-stockmove" tabindex="-1" role="dialog" aria-labelledby="modal-stockmove-title" aria-describedby="modal-stockmove-desc" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modal-stockmove-title">Stock Move</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="modal-stockmove-body">
+        <p class="sr-only" id="modal-stockmove-desc">Use the form below to move a good between two repositories.</p>
+        <div class="form-group">
+          <label for="modal-stockmove-input-pn">P/N <span class="text-secondary" aria-hidden="true">("pn")</span></label>
+          <input class="form-control" id="modal-stockmove-input-pn" required>
+        </div>
+        <div class="form-group">
+          <label for="modal-stockmove-input-recipient">To <span class="text-secondary" aria-hidden="true">("in")</span></label>
+          <input class="form-control" id="modal-stockmove-input-recipient" required>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" id="modal-stockmove-btn-submit">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>
+{% endmacro %}
+
 {% macro change(pn,amount) %}
 <div class="modal fade" id="modal-change" tabindex="-1" role="dialog" aria-labelledby="modal-change-title" aria-describedby="modal-change-desc" aria-hidden="true">
   <div class="modal-dialog" role="document">

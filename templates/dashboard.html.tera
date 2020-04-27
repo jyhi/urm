@@ -15,6 +15,7 @@
     {{ common::navbar(active="Dashboard") }}
     {{ modal::stockin() }}
     {{ modal::stockout() }}
+    {{ modal::stockmove() }}
 
     <div id="content" class="container">
       {# Warning for JavaScript presence #}
@@ -55,9 +56,9 @@
               </div>
             </div>
             <div class="card">
-              <div class="card-body">
-                <h5 class="card-title"><a href="/products" class="text-dark stretched-link">View All Products</a></h5>
-                <h6 class="card-subtitle">Take a look at all the things under management.</h6>
+              <div class="card-body btn btn-light text-left" id="btn-stockmove" role="button">
+                <h5 class="card-title">Stock Move</h5>
+                <h6 class="card-subtitle">Move goods around repositories.</h6>
               </div>
             </div>
           </div>

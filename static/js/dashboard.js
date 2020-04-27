@@ -6,6 +6,10 @@ $("#btn-stockout").click(() => {
   $("#modal-stockout").modal("toggle")
 })
 
+$("#btn-stockmove").click(() => {
+  $("#modal-stockmove").modal("toggle")
+})
+
 $("#modal-stockin-btn-add-field").click(() => {
   const n = $("#modal-stockin-body .field").length;
 
@@ -78,5 +82,27 @@ $("#modal-stockout-btn-submit").click(() => {
       $("#modal-stockout").modal("hide")
       location.reload()
     })
+  })
+})
+
+$("#modal-stockmove-btn-submit").click(() => {
+  const validity = $
+    .map($("#modal-stockmove-body input"), (v) => v.validity.valid)
+    .reduce((a, v) => a & v, true)
+  if (!validity)
+    return
+
+  const pn = $("#modal-stockmove-input-pn")[0].value
+  const to = $("#modal-stockmove-input-recipient")[0].value
+  const object = {"in": to}
+
+  $.ajax({
+    method: "PATCH",
+    url: `/product/${pn}`,
+    contentType: "application/json",
+    data: JSON.stringify(object)
+  }).done(() => {
+    $("#modal-stockmove").modal("hide")
+    location.reload()
   })
 })
