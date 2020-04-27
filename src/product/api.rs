@@ -13,7 +13,11 @@ pub fn from_db(db: &UrmDb, config: &UrmConfig, pn: String)
   match db.collection(&config.collection.products)
     .find_one(Some(doc!{ "pn": pn }), None)?
   {
-    Some(doc) => Ok(Some(doc)),
+    Some(mut doc) => {
+      // Remove MongoDB ID; this should be hidden from the user.
+      doc.remove("_id");
+      Ok(Some(doc))
+    },
     None => Ok(None)
   }
 }

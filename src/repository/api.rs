@@ -13,7 +13,11 @@ pub fn from_db(db: &UrmDb, config: &UrmConfig, ln_p: String)
   match db.collection(&config.collection.repositories)
     .find_one(Some(doc!{ "ln_p": ln_p }), None)?
   {
-    Some(doc) => Ok(Some(doc)),
+    Some(mut doc) => {
+      // Remove MongoDB ID; this should be hidden from the user.
+      doc.remove("_id");
+      Ok(Some(doc))
+    },
     None => Ok(None)
   }
 }
