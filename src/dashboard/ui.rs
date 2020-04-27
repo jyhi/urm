@@ -10,6 +10,7 @@ pub struct Context<'a> {
   pub urm: &'a UrmConfig,
   pub search: SearchInfo,
   pub nprod: u64,
+  pub nrepo: u64,
 }
 
 impl<'a> Context<'a> {
@@ -31,11 +32,14 @@ impl<'a> Context<'a> {
 
     let nprod = db.collection(&config.collection.products)
       .count(None, None)? as u64;
+    let nrepo = db.collection(&config.collection.repositories)
+      .count(None, None)? as u64;
 
     Ok(Context {
       urm: config,
       search: search_info,
       nprod: nprod,
+      nrepo: nrepo,
     })
   }
 }

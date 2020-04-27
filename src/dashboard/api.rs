@@ -7,6 +7,7 @@ use crate::config::UrmConfig;
 #[derive(Serialize)]
 pub struct Context {
   pub nprod: u64,
+  pub nrepo: u64
 }
 
 impl Context {
@@ -15,9 +16,12 @@ impl Context {
   {
     let nprod = db.collection(&config.collection.products)
       .count(None, None)? as u64;
+    let nrepo = db.collection(&config.collection.repositories)
+      .count(None, None)? as u64;
 
     Ok(Context {
       nprod: nprod,
+      nrepo: nrepo,
     })
   }
 }
