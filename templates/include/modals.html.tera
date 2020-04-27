@@ -90,7 +90,7 @@
 </div>
 {% endmacro %}
 
-{% macro edit(product)%}
+{% macro edit(thing)%}
 <div class="modal fade" id="modal-edit" tabindex="-1" role="dialog" aria-labelledby="modal-edit-title" aria-describedby="modal-edit-desc" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -101,10 +101,10 @@
         </button>
       </div>
       <div class="modal-body" id="modal-edit-body">
-        <p class="sr-only" id="modal-edit-desc">Use the form below to edit the attributes of this product.</p>
-        {% for key, value in product %}
+        <p class="sr-only" id="modal-edit-desc">Use the form below to edit the attributes of {{ thing.name }}.</p>
+        {% for key, value in thing %}
         {% if key == "attributes" %}
-        {% for attr in product.attributes %}
+        {% for attr in thing.attributes %}
         <div class="form-group">
           <label for="modal-edit-input-{{ attr.key }}">{{ attr.key }}</label>
           <input class="form-control" id="modal-edit-input-{{ attr.key }}" value="{{ attr.value }}" required>

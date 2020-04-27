@@ -13,7 +13,7 @@
 
     {{ common::navbar() }}
     {{ modal::change(pn=product.pn,amount=product.amount) }}
-    {{ modal::edit(product=product) }}
+    {{ modal::edit(thing=product) }}
     {{ modal::remove() }}
 
     <div id="content" class="container">

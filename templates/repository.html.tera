@@ -12,6 +12,7 @@
     <a class="sr-only sr-only-focusable" href="#content">Skip to main content</a>
 
     {{ common::navbar() }}
+    {{ modal::edit(thing=repository) }}
     {{ modal::remove() }}
 
     <div id="content" class="container">
@@ -36,7 +37,7 @@
           <div class="row justify-content-end">
             <div class="col-auto">
               <span class="sr-only">Operations:</span>
-              <button type="button" class="btn btn-link">Edit</button>
+              <button type="button" class="btn btn-link" data-toggle="modal" data-target="#modal-edit">Edit</button>
               <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#modal-remove">Remove</button>
             </div>
           </div>
