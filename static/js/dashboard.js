@@ -64,7 +64,6 @@ $("#modal-stockout-btn-submit").click(() => {
 
   const pn = $("#modal-stockout-input-pn")[0].value
   const recipient = $("#modal-stockout-input-recipient")[0].value
-  const object = {"in": recipient}
 
   $.getJSON(`/product/${pn}`, (product) => {
     product.in = recipient
