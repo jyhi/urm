@@ -46,10 +46,25 @@ impl From<mongodb::Document> for Repository {
         _ => {
           // Skip MongoDB ID; this should be hidden from the user.
           if f.0 != "_id" {
+            let kstr = f.0.to_string();
+            let vstr = f.1.to_string();
+
+            let key = if kstr.starts_with('"') && kstr.ends_with('"') {
+              kstr.strip_prefix('"').unwrap().strip_suffix('"').unwrap().to_owned()
+            } else {
+              kstr
+            };
+
+            let value = if vstr.starts_with('"') && vstr.ends_with('"') {
+              vstr.strip_prefix('"').unwrap().strip_suffix('"').unwrap().to_owned()
+            } else {
+              vstr
+            };
+
             r.attributes.push(
               Attribute {
-                key: f.0.to_string(),
-                value: f.1.to_string(),
+                key: key,
+                value: value,
               }
             );
           };
