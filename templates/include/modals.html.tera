@@ -135,21 +135,22 @@
         {% if key == "attributes" %}
         {% for attr in thing.attributes %}
         <div class="form-group">
-          <label for="modal-edit-input-{{ attr.key }}">{{ attr.key }}</label>
-          <input class="form-control" id="modal-edit-input-{{ attr.key }}" value="{{ attr.value }}" required>
+          <label for="modal-edit-input-{{ attr.key }}" class="real-key">{{ attr.key }}</label>
+          <input class="form-control value" id="modal-edit-input-{{ attr.key }}" value="{{ attr.value }}" required>
         </div>
         {% endfor %}
         {% else %}
         <div class="form-group">
-          <label for="modal-edit-input-{{ key }}">{{ key }}</label>
+          <label for="modal-edit-input-{{ key }}" class="real-key">{{ key }}</label>
           {% if key == "amount" %}
-          <input type="number" class="form-control" id="modal-edit-input-amount" value="{{ value }}" required>
+          <input type="number" class="form-control value" id="modal-edit-input-amount" value="{{ value }}" required>
           {% else %}
-          <input class="form-control" id="modal-edit-input-{{ key }}" value="{{ value }}" required>
+          <input class="form-control value" id="modal-edit-input-{{ key }}" value="{{ value }}" required>
           {% endif %}
         </div>
         {% endif %}
         {% endfor %}
+        <button class="btn btn-block btn-primary" id="modal-edit-btn-add-field">Add Field</button>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" id="modal-edit-btn-submit">Submit</button>
