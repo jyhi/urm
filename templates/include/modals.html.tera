@@ -134,9 +134,16 @@
         {% for key, value in thing %}
         {% if key == "attributes" %}
         {% for attr in thing.attributes %}
-        <div class="form-group">
+        <div class="form-group" id="modal-edit-field{{ loop.index }}">
           <label for="modal-edit-input-{{ attr.key }}" class="real-key">{{ attr.key }}</label>
-          <input class="form-control value" id="modal-edit-input-{{ attr.key }}" value="{{ attr.value }}" required>
+          <div class="row no-gutters">
+            <div class="col">
+              <input class="form-control value" id="modal-edit-input-{{ attr.key }}" value="{{ attr.value }}" required>
+            </div>
+            <div class="col-auto ml-2">
+              <button class="btn btn-outline-danger" id="modal-edit-btn-remove-field{{ loop.index }}" aria-label="Remove this field" onclick="removeField('#modal-edit-field{{ loop.index }}')">&times;</button>
+            </div>
+          </div>
         </div>
         {% endfor %}
         {% else %}
